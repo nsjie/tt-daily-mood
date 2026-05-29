@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>鑰冩媺灏忔湅鍙嬬殑姣涚粧缁掕浜嬫湰</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="姣涚粧缁掕浜嬫湰">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<style>
+:root {
+  --bg:#1e1528; --card:#2a1f36; --card2:#332840; --border:#3d2f4a;
+  --text:#f0e6f6; --text2:#a898b8;
+  --green:#a3e8b5; --green-bg:#a3e8b520;
+  --blue:#a3c8f0; --blue-bg:#a3c8f020;
+  --orange:#ffc4a3; --orange-bg:#ffc4a320;
+  --red:#ff8a9e; --red-bg:#ff8a9e20;
+  --purple:#c9a3f5; --purple-bg:#c9a3f520;
+  --pink:#ff8fab; --pink-bg:#ff8fab20;
+  --yellow:#ffe4a0; --yellow-bg:#ffe4a020;
+  --rose:#ffb3c6; --rose-bg:#ffb3c620;
+  --radius:18px; --radius-sm:10px;
+  --shadow:0 2px 16px rgba(200,150,220,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6;
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(255,143,171,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(201,163,245,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,228,160,0.03) 0%, transparent 50%);
+}
+
+/* cute corner decorations */
+body::before{content:'馃崜 馃惃 馃崐 鈾?馃惁鈥嶐煍?馃悏';position:fixed;top:4px;right:12px;
+  font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
+body::after{content:'馃崐 馃悏 馃崜 鈾?馃惁鈥嶐煍?馃惃';position:fixed;bottom:4px;left:12px;
+  font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
+
+header{
+  background:linear-gradient(135deg,#2d1830 0%,#1e2a20 50%,#2a1830 100%);
+  border-bottom:1px solid var(--border); padding:14px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 20px rgba(200,150,220,0.06);
+}
+header h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+header .subtitle{font-size:0.72rem;color:var(--text2);}
+
+/* cute header floating emojis */
+header::after{content:'馃崜馃崐馃惃';position:absolute;right:50px;top:6px;
+  font-size:14px;opacity:0.5;pointer-events:none;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+nav.tabs{display:flex;gap:2px;padding:0 16px;background:var(--card);
+  border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:99;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;}
+nav.tabs button{background:none;border:none;color:var(--text2);
+  padding:12px 14px;cursor:pointer;font-size:0.82rem;
+  border-bottom:3px solid transparent;transition:0.25s;white-space:nowrap;flex-shrink:0;}
+nav.tabs button:hover{color:var(--pink);}
+nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
+
+.tab-content{display:none;padding:16px;max-width:900px;margin:0 auto;position:relative;}
+.tab-content.active{display:block;}
+
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:20px; margin-bottom:16px;
+  box-shadow:var(--shadow); transition:0.2s;
+}
+.card:hover{box-shadow:0 4px 24px rgba(200,150,220,0.12);}
+.card h2{font-size:1.05rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card h3{font-size:0.9rem;margin-bottom:10px;color:var(--text2);}
+
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.form-group{flex:1;min-width:120px;}
+.form-group label{display:block;font-size:0.78rem;color:var(--text2);margin-bottom:5px;font-weight:500;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%; background:var(--card2); border:1px solid var(--border);
+  color:var(--text); padding:9px 12px; border-radius:var(--radius-sm);
+  font-size:0.9rem; outline:none; transition:0.2s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-bg);}
+.form-group textarea{resize:vertical;min-height:50px;}
+.form-group input[type=range]{padding:0;accent-color:var(--pink);height:6px;}
+
+.slider-row{display:flex;align-items:center;gap:10px;}
+.slider-row input[type=range]{flex:1;}
+.slider-row .val{font-size:1rem;font-weight:700;min-width:24px;text-align:center;color:var(--pink);}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{
+  padding:6px 13px; border-radius:20px; font-size:0.78rem;
+  border:1.5px solid var(--border); cursor:pointer; transition:0.2s;
+  user-select:none; -webkit-tap-highlight-color:transparent;
+  background:var(--card2); color:var(--text2);
+}
+.chip:hover{border-color:var(--pink);color:var(--pink);}
+.chip.selected{
+  border-color:var(--pink); color:#fff;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  box-shadow:0 2px 8px rgba(255,143,171,0.2);
+}
+
+.btn{
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  color:#fff; border:none; padding:10px 24px; border-radius:24px;
+  font-size:0.9rem; font-weight:600; cursor:pointer; transition:0.25s;
+  box-shadow:0 4px 14px rgba(255,143,171,0.2);
+}
+.btn:hover{opacity:0.88;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,143,171,0.3);}
+.btn:active{transform:translateY(0);}
+.btn-sm{padding:7px 16px;font-size:0.8rem;border-radius:20px;}
+.btn-secondary{background:var(--card2);color:var(--text);border:1px solid var(--border);box-shadow:none;}
+.btn-secondary:hover{background:var(--border);}
+.btn-danger{background:linear-gradient(135deg,var(--red),#ff6b81);color:#fff;box-shadow:0 4px 14px rgba(255,138,158,0.2);}
+
+/* Toggle buttons cute */
+.toggle-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.toggle-btn{
+  background:var(--card2); color:var(--text2); border:1px solid var(--border);
+  padding:7px 18px; border-radius:20px; font-size:0.8rem; cursor:pointer; transition:0.25s;
+}
+.toggle-btn:hover{border-color:var(--pink);color:var(--pink);}
+.toggle-btn.active{
+  background:linear-gradient(135deg,var(--pink),var(--rose));
+  color:#fff; border-color:transparent;
+}
+
+/* Radio group cute */
+.radio-group{display:flex;gap:6px;flex-wrap:wrap;}
+.radio-group .radio-btn{
+  background:var(--card2); border:1px solid var(--border); color:var(--text2);
+  padding:6px 15px; border-radius:20px; font-size:0.78rem; cursor:pointer; transition:0.25s;
+}
+.radio-group .radio-btn:hover{border-color:var(--purple);color:var(--purple);}
+.radio-group .radio-btn.selected{
+  border-color:var(--purple); color:#fff;
+  background:linear-gradient(135deg,#c9a3f5,#d4a8ff);
+}
+
+/* Mood blocks */
+.mood-block{
+  border-left:4px solid var(--pink); padding:12px 16px; margin-bottom:12px;
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0; background:var(--card2);
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+.mood-block.morning{border-color:var(--yellow);}
+.mood-block.noon{border-color:var(--orange);}
+.mood-block.afternoon{border-color:var(--blue);}
+.mood-block.evening{border-color:var(--purple);}
+
+/* Mood intensity rows */
+.mood-intensity-row{
+  display:flex; align-items:center; gap:8px; margin-bottom:6px;
+  background:var(--card); border-radius:10px; padding:6px 10px;
+}
+
+/* Review items cute */
+.review-item{
+  background:var(--card2); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:16px; margin-bottom:10px; transition:0.2s;
+}
+.review-item:hover{border-color:var(--purple);}
+.review-item .q{font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--pink);}
+.review-item textarea{
+  width:100%; background:var(--card); border:1px solid var(--border);
+  color:var(--text); padding:10px; border-radius:8px; font-size:0.85rem;
+  outline:none; min-height:60px; resize:vertical;
+}
+.review-item textarea:focus{border-color:var(--pink);}
+
+/* Joy items cute */
+.joy-list{list-style:none;}
+.joy-item{
+  display:flex; align-items:flex-start; gap:12px; padding:12px 0;
+  border-bottom:1px dashed var(--border);
+}
+.joy-item:last-child{border-bottom:none;}
+.joy-item .emoji{font-size:1.5rem;filter:drop-shadow(0 2px 4px rgba(200,150,220,0.3));}
+.joy-item textarea{
+  flex:1; background:var(--card2); border:1px solid var(--border);
+  color:var(--text); padding:8px 12px; border-radius:10px; font-size:0.85rem;
+  outline:none; min-height:36px; resize:none; transition:0.2s;
+}
+.joy-item textarea:focus{border-color:var(--yellow);box-shadow:0 0 0 3px var(--yellow-bg);}
+
+/* Trend table */
+.trend-table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+.trend-table th{text-align:left;padding:10px 12px;color:var(--pink);border-bottom:2px solid var(--border);font-weight:600;font-size:0.75rem;}
+.trend-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
+.trend-high{color:var(--green);font-weight:600;}
+.trend-mid{color:var(--orange);font-weight:600;}
+.trend-low{color:var(--red);font-weight:600;}
+
+.tip-box{
+  background:linear-gradient(135deg,var(--rose-bg),var(--purple-bg));
+  border:1px solid var(--pink); border-radius:var(--radius);
+  padding:18px 22px; margin-bottom:16px;
+}
+.tip-box .tip{font-size:0.85rem;color:var(--text);margin-bottom:6px;padding-left:16px;position:relative;}
+.tip-box .tip::before{content:'馃挕';position:absolute;left:-4px;top:0;}
+
+/* Responsive */
+@media(max-width:640px){
+  header{padding:10px 14px;}
+  header h1{font-size:1rem;}
+  nav.tabs{padding:0 4px;gap:0;}
+  nav.tabs button{padding:10px 10px;font-size:0.72rem;}
+  .tab-content{padding:10px;}
+  .card{padding:16px;}
+  .form-row{flex-direction:column;gap:8px;}
+  .form-group{min-width:100%;}
+  .btn{padding:12px 22px;}
+  header::after{display:none;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div><h1>馃惃 鑰冩媺灏忔湅鍙嬬殑姣涚粧缁掕浜嬫湰</h1><div class="subtitle">鎵€鏈夋儏缁兘鏈夊畠鐨勬剰涔?/div></div>
+  <button class="btn btn-sm btn-secondary" onclick="switchDate()">馃搮 鍒囨崲鏃ユ湡</button>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="active" data-tab="checkin">馃搵 浠婃棩璁板綍</button>
+  <button data-tab="review">馃攳 姣忔棩澶嶇洏</button>
+  <button data-tab="joy">鉁?灏忕‘骞?/button>
+  <button data-tab="trends">馃搳 鏈懆瓒嬪娍</button>
+</nav>
+
+<!-- ============ TAB 1: 浠婃棩璁板綍 ============ -->
+<div class="tab-content active" id="tab-checkin">
+  <div class="tip-box">
+    <div class="tip">涓嶆眰瀹岀編锛氬摢鎬曞彧璁颁竴鍙ヨ瘽涔熸瘮涓嶈濂?/div>
+    <div class="tip">涓嶅畾鏃惰褰曪細鎰熻鏈夋儏缁椂灏卞彲浠ヨ褰?/div>
+    <div class="tip">鍏佽鎯呯华瀛樺湪锛氭墍鏈夋儏缁兘鏈夊畠鐨勬剰涔夛紝鏃犻渶璇勫垽濂藉潖</div>
+    <div class="tip">瀵绘壘妯″紡锛氬嚑鍛ㄥ悗鍥炵湅锛屽彲鑳戒細鍙戠幇鎯呯华瑙勫緥鍜岃Е鍙戝洜绱?/div>
+  </div>
+
+  <!-- ---- 鍩烘湰淇℃伅 ---- -->
+  <div class="card" style="border-left:3px solid var(--purple);">
+    <h2>馃搶 鍩烘湰淇℃伅</h2>
+    <div class="form-row"><div class="form-group"><label>鏃ユ湡</label><input type="date" id="moodDate"></div><div class="form-group"><label>澶╂皵</label><select id="moodWeather"><option value="">---</option><option>鈽€锔?鏅?/option><option>鉀?澶氫簯</option><option>鈽侊笍 闃村ぉ</option><option>馃對锔?灏忛洦</option><option>馃導锔?涓洦</option><option>馃導锔?澶ч洦</option><option>鉀堬笍 鏆撮闆?/option><option>馃寑 鍙伴</option><option>馃尐锔?灏忛洩</option><option>鉂勶笍 涓洩</option><option>鉂勶笍 澶ч洩</option><option>馃尐锔?鏆撮闆?/option><option>馃尗锔?闆鹃溇</option><option>馃挩 澶ч</option></select></div></div>
+    <div class="form-row">
+      <div class="form-group"><label>鐫＄湢璐ㄩ噺</label><div class="radio-group" id="sleepGroup"><span class="radio-btn" data-v="1">猸?/span><span class="radio-btn" data-v="2">猸愨瓙</span><span class="radio-btn" data-v="3">猸愨瓙猸?/span><span class="radio-btn" data-v="4">猸愨瓙猸愨瓙</span><span class="radio-btn" data-v="5">猸愨瓙猸愨瓙猸?/span></div></div>
+      <div class="form-group"><label>绮惧姏姘村钩 (1-10)</label><div class="slider-row"><input type="range" id="moodEnergy" min="1" max="10" value="5"><span class="val" id="energyVal">5</span></div></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>鏄惁涓虹敓鐞嗘湡</label><div class="toggle-row"><button class="toggle-btn" id="periodYes" onclick="togglePeriod(true)">鏄?/button><button class="toggle-btn active" id="periodNo" onclick="togglePeriod(false)">鍚?/button></div></div>
+      <div class="form-group period-opt" id="periodFlowGroup" style="display:none;"><label>鐢熺悊鏈熼噺</label><div class="radio-group" id="flowGroup"><span class="radio-btn" data-v="灏?>灏?/span><span class="radio-btn" data-v="涓?>涓?/span><span class="radio-btn" data-v="澶?>澶?/span></div></div>
+      <div class="form-group period-opt" style="display:none;"><label>鐥涚粡绋嬪害</label><div class="radio-group" id="painGroup"><span class="radio-btn" data-v="鏃?>鏃?/span><span class="radio-btn" data-v="杞?>杞?/span><span class="radio-btn" data-v="涓?>涓?/span><span class="radio-btn" data-v="閲?>閲?/span></div></div>
+<div class="form-group no-period-opt"><label>鐧藉甫鏄惁姝ｅ父</label><select id="moodDischarge"><option value="">---</option><option value="姝ｅ父">鉁?姝ｅ父</option><option value="寮傚父">鈿狅笍 寮傚父</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>鏄惁鐖辩埍</label><div class="toggle-row"><button class="toggle-btn" id="sexYes" onclick="toggleSex(true)">鏄?/button><button class="toggle-btn active" id="sexNo" onclick="toggleSex(false)">鍚?/button></div></div>
+      <div class="form-group sex-opt" style="display:none;"><label>鐖辩埍娆℃暟</label><input type="number" id="moodSexCount" min="0" placeholder="濡?1"></div>
+      <div class="form-group sex-opt" style="display:none;"><label>鎺柦</label><select id="moodSexMeasure"><option value="">---</option><option value="鏃?>鉂?鏃?/option><option value="瀹夊叏濂?>馃敀 瀹夊叏濂?/option><option value="浣撳">馃挦 浣撳</option><option value="鐭晥鑽?>馃拪 鐭晥鑽?/option><option value="绱ф€ラ伩瀛曡嵂">馃拪 绱ф€ラ伩瀛曡嵂</option><option value="鍏朵粬">馃敼 鍏朵粬</option></select></div>
+      <div class="form-group no-sex-opt" style="display:none;"><label>鏄惁DIY</label><div class="toggle-row"><button class="toggle-btn" id="diyYes" onclick="toggleDiy(true)">鏄?/button><button class="toggle-btn active" id="diyNo" onclick="toggleDiy(false)">鍚?/button></div></div>
+      <div class="form-group diy-opt" style="display:none;"><label>鏄惁浣跨敤Toys</label><div class="toggle-row"><button class="toggle-btn" id="toysYes" onclick="toggleToys(true)">鏄?/button><button class="toggle-btn active" id="toysNo" onclick="toggleToys(false)">鍚?/button></div></div>
+      <div class="form-group"><label>浣撻噸 (kg)</label><input type="number" id="moodWeight" placeholder="濡?55.0" step="0.1"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>鏃╅</label><select id="moodBreakfast"><option value="">---</option><option value="鍚冧簡">鉁?鍚冧簡</option><option value="娌″悆">鉂?娌″悆</option></select></div>
+      <div class="form-group"><label>鍠濇按 (鏉?</label><input type="number" id="moodWater" min="0" max="20" placeholder="濡?6" value=""></div>
+      <div class="form-group"><label>姘存灉鎽勫叆</label><select id="moodFruit"><option value="">---</option><option value="鏈?>鉁?鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>鍠濆挅鍟?/label><select id="moodCoffee"><option value="">---</option><option value="鏈?>鈽?鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>鐢熷喎楗搧</label><select id="moodColdDrink"><option value="">---</option><option value="鏈?>馃 鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>楗厭</label><select id="moodAlcohol"><option value="">---</option><option value="鏈?>馃嵑 鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>杩愬姩</label><select id="moodExercise"><option value="">---</option><option value="鏈夋哀">馃弮 鏈夋哀</option><option value="鍔涢噺">馃弸锔?鍔涢噺</option><option value="鐟滀冀">馃 鐟滀冀</option><option value="鏁ｆ">馃毝 鏁ｆ</option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>杩愬姩鏃堕暱 (鍒嗛挓)</label><input type="number" id="moodExerciseMin" min="0" placeholder="濡?30"></div>
+      <div class="form-group"><label>鎺掍究</label><select id="moodBowel"><option value="">---</option><option value="姝ｅ父">鉁?姝ｅ父</option><option value="渚跨">馃槪 渚跨</option><option value="鑵规郴">馃挩 鑵规郴</option><option value="鏃?>鉂?鏃?/option></select></div>
+    </div>
+  </div>
+
+  <!-- ---- 鎯呯华璁板綍锛?鏃舵锛屾瘡鏉″彲鍔ㄦ€佸鍒狅級 ---- -->
+  <div class="card" style="border-left:3px solid var(--yellow);">
+    <h2>馃寘 涓婂崍鎯呯华</h2>
+    <div class="mood-entries" id="moodMorning"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('morning')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--orange);">
+    <h2>鈽€锔?涓崍鎯呯华</h2>
+    <div class="mood-entries" id="moodNoon"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('noon')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--blue);">
+    <h2>馃尋锔?涓嬪崍鎯呯华</h2>
+    <div class="mood-entries" id="moodAfternoon"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('afternoon')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--purple);">
+    <h2>馃寵 鏅氫笂鎯呯华</h2>
+    <div class="mood-entries" id="moodEvening"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('evening')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+  </div>
+
+  <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">馃捑 淇濆瓨浠婃棩璁板綍</button></div>
+</div>
+
+<!-- ============ TAB 2: 姣忔棩澶嶇洏 ============ -->
+<div class="tab-content" id="tab-review">
+  <div class="card" style="border-left:3px solid var(--purple);">
+    <h2>馃攳 姣忔棩澶嶇洏</h2>
+    <div class="review-item"><div class="q">1. 浠婃棩鏈€寮虹儓鐨勬儏缁槸浠€涔堬紵鏄粈涔堣Е鍙戜簡瀹冿紵</div><textarea id="reviewQ1" placeholder="鍐欎笅浣犵殑鎰熷彈..."></textarea></div>
+    <div class="review-item"><div class="q">2. 杩欎釜鎯呯华鑳屽悗锛屾垜鐪熸鐨勯渶姹傛垨鎯虫硶鏄粈涔堬紵</div><textarea id="reviewQ2" placeholder="娣卞叆鎬濊€?.."></textarea></div>
+    <div class="review-item"><div class="q">3. 浠婂ぉ鎴戝浣曞洖搴斾簡鑷繁鐨勬儏缁紵锛堝仛浜嗕粈涔?/ 娌″仛浠€涔堬級</div><textarea id="reviewQ3" placeholder="鍥為【浣犵殑搴斿鏂瑰紡..."></textarea></div>
+    <div class="review-item"><div class="q">4. 濡傛灉鍙互閲嶆潵锛屾垜浼氱敤涓嶅悓鐨勬柟寮忓鐞嗗悧锛?/div><textarea id="reviewQ4" placeholder="鍙嶆€濅笌鎴愰暱..."></textarea></div>
+    <div class="review-item"><div class="q">馃摑 鍏朵粬鎯冲鑷繁璇寸殑璇?/div><textarea id="reviewExtra" placeholder="鑷敱涔﹀啓..."></textarea></div>
+    <button class="btn" onclick="saveReview()" style="margin-top:10px;">馃捑 淇濆瓨澶嶇洏</button>
+  </div>
+</div>
+
+<!-- ============ TAB 3: 灏忕‘骞?============ -->
+<div class="tab-content" id="tab-joy">
+  <div class="card" style="border-left:3px solid var(--yellow);">
+    <h2>鉁?姣忔棩灏忕‘骞?/h2>
+    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">浠婂ぉ璁╀綘鎰熷埌娓╂殩鎴栧紑蹇冪殑鍑犱欢灏忎簨锛?/p>
+    <ul class="joy-list" id="joyList">
+      <li class="joy-item"><span class="emoji">馃専</span><textarea id="joy1" placeholder="濡傦細鏃╀笂鍠濆埌浜嗙壒鍒ソ鍠濈殑鍜栧暋..."></textarea></li>
+      <li class="joy-item"><span class="emoji">馃尭</span><textarea id="joy2" placeholder="濡傦細璺笂鐪嬪埌涓€鍙彲鐖辩殑灏忕尗..."></textarea></li>
+      <li class="joy-item"><span class="emoji">馃挐</span><textarea id="joy3" placeholder="濡傦細鍚屼簨甯垜甯︿簡鍗堥キ..."></textarea></li>
+      <li class="joy-item"><span class="emoji">馃崁</span><textarea id="joy4" placeholder="闅忔剰璁板綍..."></textarea></li>
+      <li class="joy-item"><span class="emoji">馃幍</span><textarea id="joy5" placeholder="闅忔剰璁板綍..."></textarea></li>
+    </ul>
+    <button class="btn btn-sm" onclick="addJoyItem()" style="margin-top:8px;">+ 娣诲姞涓€鏉?/button>
+    <button class="btn" onclick="saveJoy()" style="margin-top:10px;display:block;width:100%;">馃捑 淇濆瓨灏忕‘骞?/button>
+  </div>
+</div>
+
+<!-- ============ TAB 4: 鏈懆瓒嬪娍 ============ -->
+<div class="tab-content" id="tab-trends">
+  <div class="card" style="border-left:3px solid var(--blue);">
+    <h2>馃搳 鏈懆鎯呯华瓒嬪娍</h2>
+    <div style="overflow-x:auto;">
+      <table class="trend-table" id="trendTable">
+        <thead><tr><th>鏃ユ湡</th><th>鏁翠綋鎯呯华 (1-10)</th><th>涓昏鎯呯华</th><th>澶囨敞</th></tr></thead>
+        <tbody id="trendBody"><tr><td colspan="4" style="text-align:center;color:var(--text2);">鏆傛棤鏈懆鏁版嵁锛屽紑濮嬭褰曞悗鑷姩鐢熸垚</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DATE PICKER MODAL ============ -->
+<div id="dateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;width:90%;max-width:360px;">
+    <h2 style="margin-bottom:16px;">馃搮 閫夋嫨鏃ユ湡</h2>
+    <input type="date" id="pickerDate" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:var(--radius-sm);font-size:1rem;margin-bottom:16px;">
+    <div style="display:flex;gap:10px;">
+      <button class="btn" onclick="loadDate()">鉁?纭畾</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('dateModal').style.display='none'">鍙栨秷</button>
+      <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="goToday()">馃搮 浠婂ぉ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== DATA LAYER ====================
+const STORAGE_KEY = 'tt_daily_mood_data';
+
+function loadAll() {
+  try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):{};}
+  catch(e){return{};}
+}
+function saveAll(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
+function getDateKey(d){return d||currentDate;}
+function getDayData(dateKey){const d=loadAll();return d[dateKey]||createEmptyDay();}
+function setDayData(dateKey,dayData){const d=loadAll();d[dateKey]=dayData;saveAll(d);}
+
+function createEmptyDay(){
+  return{
+    weather:'',sleep:'',energy:5,period:false,periodFlow:'',periodPain:'',
+    sex:false,sexCount:'',sexMeasure:'',diy:false,toys:false,weight:'',discharge:'',breakfast:'',water:'',fruit:'',coffee:'',coldDrink:'',alcohol:'',exercise:'',exerciseMin:'',bowel:'',
+    morning:[],
+    noon:[],
+    afternoon:[],
+    evening:[],
+    review:{q1:'',q2:'',q3:'',q4:'',extra:''},
+    joys:[]
+  };
+}
+
+// ==================== STATE ====================
+let currentDate = new Date().toISOString().slice(0,10);
+let currentDay = null;
+
+function loadDay(dateKey){
+  currentDate = dateKey||currentDate;
+  currentDay = getDayData(currentDate);
+  document.getElementById('moodDate').value = currentDate;
+}
+
+function fillForm(){
+  const d=currentDay;
+  document.getElementById('moodWeather').value=d.weather||'';
+  setRadio('sleepGroup',d.sleep);
+  document.getElementById('moodEnergy').value=d.energy||5;
+  document.getElementById('energyVal').textContent=d.energy||5;
+  togglePeriod(d.period);
+  if(d.period){setRadio('flowGroup',d.periodFlow);setRadio('painGroup',d.periodPain);}
+  else{ document.getElementById('moodDischarge').value=d.discharge||''; }
+  toggleSex(d.sex);
+  if(d.sex){
+    document.getElementById('moodSexCount').value=d.sexCount||'';
+    document.getElementById('moodSexMeasure').value=d.sexMeasure||'';
+  } else {
+    toggleDiy(d.diy||false);
+    if(d.diy) toggleToys(d.toys||false);
+  }
+  document.getElementById('moodWeight').value=d.weight||'';
+  document.getElementById('moodBreakfast').value=d.breakfast||'';
+  document.getElementById('moodWater').value=d.water||'';
+  document.getElementById('moodFruit').value=d.fruit||'';
+  document.getElementById('moodCoffee').value=d.coffee||'';
+  document.getElementById('moodColdDrink').value=d.coldDrink||'';
+  document.getElementById('moodAlcohol').value=d.alcohol||'';
+  document.getElementById('moodExercise').value=d.exercise||'';
+  document.getElementById('moodExerciseMin').value=d.exerciseMin||'';
+  document.getElementById('moodBowel').value=d.bowel||'';
+
+  // Mood entries (dynamic)
+  fillMoodEntries('morning',d.morning||[{event:'',moods:[],intensity:5}]);
+  fillMoodEntries('noon',d.noon||[{event:'',moods:[],intensity:5}]);
+  fillMoodEntries('afternoon',d.afternoon||[{event:'',moods:[],intensity:5}]);
+  fillMoodEntries('evening',d.evening||[{event:'',moods:[],intensity:5}]);
+
+  // Review
+  const r=d.review||{};
+  document.getElementById('reviewQ1').value=r.q1||'';
+  document.getElementById('reviewQ2').value=r.q2||'';
+  document.getElementById('reviewQ3').value=r.q3||'';
+  document.getElementById('reviewQ4').value=r.q4||'';
+  document.getElementById('reviewExtra').value=r.extra||'';
+
+  // Joys
+  fillJoys(d.joys||[]);
+}
+
+function setRadio(groupId,val){
+  const g=document.getElementById(groupId);
+  if(!g)return;
+  g.querySelectorAll('.radio-btn').forEach(b=>{
+    b.classList.toggle('selected',b.dataset.v===val||b.dataset.v==String(val));
+  });
+}
+function getRadio(groupId){
+  const g=document.getElementById(groupId);
+  if(!g)return'';
+  const s=g.querySelector('.radio-btn.selected');
+  return s?s.dataset.v:'';
+}
+
+function setChips(chipGroupId,moods){
+  document.getElementById(chipGroupId).querySelectorAll('.chip').forEach(c=>{
+    c.classList.toggle('selected',moods.includes(c.textContent.trim()));
+  });
+}
+function getChips(chipGroupId){
+  const chips=[];
+  document.getElementById(chipGroupId).querySelectorAll('.chip.selected').forEach(c=>chips.push(c.textContent.trim()));
+  return chips;
+}
+
+function fillJoys(joys){
+  const container=document.getElementById('joyList');
+  container.innerHTML='';
+  const emojis=['馃専','馃尭','馃挐','馃崁','馃幍','鈽?,'馃惐','馃寛','馃巵','馃摎'];
+  const items=joys.length>0?joys:[''];
+  items.forEach((j,i)=>{
+    const li=document.createElement('li');
+    li.className='joy-item';
+    li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="璁板綍涓€浠舵俯鏆栧皬浜?..">${j||''}</textarea>`;
+    container.appendChild(li);
+  });
+}
+
+function collectJoys(){
+  const joys=[];
+  document.getElementById('joyList').querySelectorAll('textarea').forEach(t=>{
+    if(t.value.trim())joys.push(t.value.trim());
+  });
+  return joys;
+}
+
+// ==================== DYNAMIC MOOD ENTRIES ====================
+const MOOD_CHIPS=['馃槉 寮€蹇?,'馃槍 骞抽潤','馃槹 鐒﹁檻','馃槫 鐑﹁簛','馃槾 鐤叉儷','馃槩 闅捐繃','馃槨 鎰ゆ€?,'馃ぉ 鍏村','馃槥 浣庤惤','馃槓 鏃犺亰','馃 鍥版儜','馃檹 鎰熸仼','馃挰 鍏朵粬'];
+
+// Normalize old data format to new moodItems format
+function normalizeEntry(e){
+  if(!e)return{event:'',moodItems:[],bodySense:'',regulation:''};
+  if(e.moodItems)return{event:e.event||'',moodItems:e.moodItems||[],bodySense:e.bodySense||'',regulation:e.regulation||''};
+  const moods=e.moods||[];
+  const intensity=e.intensity||5;
+  return{event:e.event||'',moodItems:moods.map(m=>({mood:m,intensity})),bodySense:e.bodySense||'',regulation:e.regulation||''};
+}
+
+function fillMoodEntries(section,entries){
+  const nameMap={morning:'Morning',noon:'Noon',afternoon:'Afternoon',evening:'Evening'};
+  const container=document.getElementById('mood'+nameMap[section]);
+  if(!container)return;
+  container.innerHTML='';
+  const list=Array.isArray(entries)?entries:[];
+  const normalized=list.map(e=>normalizeEntry(e));
+  if(normalized.length===0)normalized.push({event:'',moodItems:[],bodySense:'',regulation:''});
+  normalized.forEach((entry,idx)=>{
+    const div=document.createElement('div');
+    div.className=`mood-block ${section}`;
+    const sid=`${section}${idx}`;
+    const selectedMoods=entry.moodItems.map(mi=>mi.mood);
+    div.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:0.75rem;color:var(--text2);">#${idx+1}</span>
+        ${normalized.length>1?'<button class="btn btn-sm btn-danger" onclick="removeMoodEntry(\''+section+'\','+idx+')" style="padding:2px 8px;font-size:0.7rem;">鉁?鍒犻櫎</button>':''}
+      </div>
+      <div class="form-group"><label>浜嬩欢绠€杩?/label><textarea id="${sid}_event" placeholder="鍙戠敓浜嗕粈涔堬紵">${entry.event||''}</textarea></div>
+      <div class="form-group"><label>鎯呯华锛堝彲澶氶€夛級</label><div class="chip-row" id="${sid}_chips">
+        ${MOOD_CHIPS.map(c=>`<span class="chip${selectedMoods.includes(c)?' selected':''}">${c}</span>`).join('')}
+      </div></div>
+      <div class="form-group mood-intensity-group" id="${sid}_intensityGroup">
+        ${entry.moodItems.length?`<label style="margin-bottom:8px;">鎯呯华寮哄害 (1-10)</label>`:''}
+        ${entry.moodItems.map((mi,i)=>`
+          <div class="mood-intensity-row" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:0.82rem;min-width:85px;">${mi.mood}</span>
+            <input type="range" id="${sid}_int_${i}" min="1" max="10" value="${mi.intensity||5}" oninput="document.getElementById('${sid}_intv_${i}').textContent=this.value" style="flex:1;accent-color:var(--purple);">
+            <span id="${sid}_intv_${i}" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">${mi.intensity||5}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="form-group"><label>浣撴劅锛堣韩浣撴劅鍙楃畝杩帮級</label><textarea id="${sid}_bodySense" placeholder="濡傦細鑳搁椃銆佸績璺冲揩銆佹墜蹇冨嚭姹椼€佽儍涓嶈垝鏈?..">${entry.bodySense||''}</textarea></div>
+      <div class="form-group"><label>鑷垜璋冭妭琛屼负</label><textarea id="${sid}_regulation" placeholder="濡傦細娣卞懠鍚搞€佹暎姝ャ€佸惉闊充箰銆佹壘浜哄€捐瘔銆佸啓鏃ヨ...">${entry.regulation||''}</textarea></div>`;
+    container.appendChild(div);
+  });
+}
+
+function addMoodEntry(section){
+  const entries=collectMoodEntries(section);
+  entries.push({event:'',moodItems:[],bodySense:'',regulation:''});
+  fillMoodEntries(section,entries);
+}
+
+function removeMoodEntry(section,idx){
+  const entries=collectMoodEntries(section);
+  entries.splice(idx,1);
+  if(entries.length===0)entries.push({event:'',moodItems:[],bodySense:'',regulation:''});
+  fillMoodEntries(section,entries);
+}
+
+// Refresh intensity UI after chip toggle (called from chip click handler)
+function refreshIntensityUI(sid){
+  const chipRow=document.getElementById(sid+'_chips');
+  const container=document.getElementById(sid+'_intensityGroup');
+  if(!chipRow||!container)return;
+  const selectedChips=chipRow.querySelectorAll('.chip.selected');
+  if(selectedChips.length===0){container.innerHTML='';return;}
+  const moods=[];
+  selectedChips.forEach((c,i)=>{moods.push({mood:c.textContent.trim(),intensity:5});});
+  container.innerHTML=`<label style="margin-bottom:8px;">鎯呯华寮哄害 (1-10)</label>
+    ${moods.map((mi,i)=>`
+      <div class="mood-intensity-row" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="font-size:0.82rem;min-width:85px;">${mi.mood}</span>
+        <input type="range" id="${sid}_int_${i}" min="1" max="10" value="${mi.intensity||5}" oninput="document.getElementById('${sid}_intv_${i}').textContent=this.value" style="flex:1;accent-color:var(--purple);">
+        <span id="${sid}_intv_${i}" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">${mi.intensity||5}</span>
+      </div>
+    `).join('')}`;
+}
+
+function collectMoodEntries(section){
+  const nameMap={morning:'Morning',noon:'Noon',afternoon:'Afternoon',evening:'Evening'};
+  const container=document.getElementById('mood'+nameMap[section]);
+  if(!container)return[];
+  const entries=[];
+  const entryDivs=container.querySelectorAll('.mood-block');
+  entryDivs.forEach((div,i)=>{
+    const sid=`${section}${i}`;
+    const eventEl=document.getElementById(sid+'_event');
+    if(!eventEl)return;
+    // Collect selected moods with intensities
+    const moodItems=[];
+    const chipRow=document.getElementById(sid+'_chips');
+    if(chipRow){
+      chipRow.querySelectorAll('.chip.selected').forEach((c,j)=>{
+        const intEl=document.getElementById(sid+'_int_'+j);
+        moodItems.push({mood:c.textContent.trim(),intensity:intEl?parseInt(intEl.value)||5:5});
+      });
+    }
+    const bodySenseEl=document.getElementById(sid+'_bodySense');
+    const regulationEl=document.getElementById(sid+'_regulation');
+    entries.push({event:eventEl.value,moodItems,bodySense:bodySenseEl?bodySenseEl.value:'',regulation:regulationEl?regulationEl.value:''});
+  });
+  return entries.length?entries:[{event:'',moodItems:[],bodySense:'',regulation:''}];
+}
+
+// ==================== TOGGLES ====================
+function togglePeriod(val){
+  currentDay.period=val;
+  document.getElementById('periodYes').classList.toggle('active',val);
+  document.getElementById('periodNo').classList.toggle('active',!val);
+  document.querySelectorAll('.period-opt').forEach(e=>e.style.display=val?'block':'none');
+  document.querySelectorAll('.no-period-opt').forEach(e=>e.style.display=val?'none':'block');
+}
+function toggleSex(val){
+  currentDay.sex=val;
+  document.getElementById('sexYes').classList.toggle('active',val);
+  document.getElementById('sexNo').classList.toggle('active',!val);
+  document.querySelectorAll('.sex-opt').forEach(e=>e.style.display=val?'block':'none');
+  document.querySelectorAll('.no-sex-opt').forEach(e=>e.style.display=val?'none':'block');
+  if(!val){ toggleDiy(currentDay.diy); } else { document.querySelectorAll('.diy-opt').forEach(e=>e.style.display='none'); }
+}
+function toggleDiy(val){
+  currentDay.diy=val;
+  document.getElementById('diyYes').classList.toggle('active',val);
+  document.getElementById('diyNo').classList.toggle('active',!val);
+  document.querySelectorAll('.diy-opt').forEach(e=>e.style.display=val?'block':'none');
+  if(!val) toggleToys(false);
+}
+function toggleToys(val){
+  currentDay.toys=val;
+  document.getElementById('toysYes').classList.toggle('active',val);
+  document.getElementById('toysNo').classList.toggle('active',!val);
+}
+
+// ==================== SAVE ====================
+function collectDay(){
+  const d=currentDay;
+  d.weather=document.getElementById('moodWeather').value;
+  d.sleep=getRadio('sleepGroup');
+  d.energy=parseInt(document.getElementById('moodEnergy').value)||5;
+  d.periodFlow=d.period?getRadio('flowGroup'):'';
+  d.periodPain=d.period?getRadio('painGroup'):'';
+  d.discharge=!d.period?document.getElementById('moodDischarge').value:'';
+  d.sexCount=d.sex?document.getElementById('moodSexCount').value:'';
+  d.sexMeasure=d.sex?document.getElementById('moodSexMeasure').value:'';
+  d.diy=!d.sex?currentDay.diy:false;
+  d.toys=!d.sex&&d.diy?currentDay.toys:false;
+  d.weight=document.getElementById('moodWeight').value;
+  d.breakfast=document.getElementById('moodBreakfast').value;
+  d.water=document.getElementById('moodWater').value;
+  d.fruit=document.getElementById('moodFruit').value;
+  d.coffee=document.getElementById('moodCoffee').value;
+  d.coldDrink=document.getElementById('moodColdDrink').value;
+  d.alcohol=document.getElementById('moodAlcohol').value;
+  d.exercise=document.getElementById('moodExercise').value;
+  d.exerciseMin=document.getElementById('moodExerciseMin').value;
+  d.bowel=document.getElementById('moodBowel').value;
+
+  d.morning=collectMoodEntries('morning');
+  d.noon=collectMoodEntries('noon');
+  d.afternoon=collectMoodEntries('afternoon');
+  d.evening=collectMoodEntries('evening');
+}
+
+function saveToday(){
+  collectDay();
+  setDayData(currentDate,currentDay);
+
+  // Flash feedback
+  const btn=event.target;
+  const orig=btn.textContent;
+  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.style.background='var(--green)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
+}
+
+function saveReview(){
+  const r=currentDay.review||{};
+  r.q1=document.getElementById('reviewQ1').value;
+  r.q2=document.getElementById('reviewQ2').value;
+  r.q3=document.getElementById('reviewQ3').value;
+  r.q4=document.getElementById('reviewQ4').value;
+  r.extra=document.getElementById('reviewExtra').value;
+  currentDay.review=r;
+  setDayData(currentDate,currentDay);
+
+  const btn=event.target;
+  const orig=btn.textContent;
+  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.style.background='var(--green)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
+}
+
+function saveJoy(){
+  currentDay.joys=collectJoys();
+  setDayData(currentDate,currentDay);
+
+  const btn=event.target;
+  const orig=btn.textContent;
+  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.style.background='var(--green)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
+}
+
+function addJoyItem(){
+  const list=document.getElementById('joyList');
+  const i=list.children.length;
+  const emojis=['馃専','馃尭','馃挐','馃崁','馃幍','鈽?,'馃惐','馃寛','馃巵','馃摎','馃尰','馃嵃','馃巰','鉁?,'馃挮'];
+  const li=document.createElement('li');
+  li.className='joy-item';
+  li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="璁板綍涓€浠舵俯鏆栧皬浜?.."></textarea>`;
+  list.appendChild(li);
+}
+
+// ==================== DATE SWITCHER ====================
+function switchDate(){
+  document.getElementById('pickerDate').value=currentDate;
+  document.getElementById('dateModal').style.display='flex';
+}
+function loadDate(){
+  const d=document.getElementById('pickerDate').value;
+  if(!d)return;
+  document.getElementById('dateModal').style.display='none';
+  loadDay(d);
+  fillForm();
+}
+function goToday(){
+  document.getElementById('dateModal').style.display='none';
+  loadDay(new Date().toISOString().slice(0,10));
+  fillForm();
+}
+
+// ==================== TREND TABLE ====================
+function refreshTrends(){
+  const all=loadAll();
+  const today=new Date();
+  const dayOfWeek=today.getDay();
+  const monday=new Date(today);
+  monday.setDate(today.getDate()-(dayOfWeek===0?6:dayOfWeek-1));
+  monday.setHours(0,0,0,0);
+  const sunday=new Date(monday);
+  sunday.setDate(monday.getDate()+6);
+
+  const rows=[];
+  for(let d=new Date(monday);d<=sunday;d.setDate(d.getDate()+1)){
+    const dk=d.toISOString().slice(0,10);
+    const data=all[dk];
+    if(data){
+      // Collect moods from all entries across all sections
+      const sections=['morning','noon','afternoon','evening'];
+      const allMoods=[];const intensities=[];
+      sections.forEach(s=>{
+        const entries=data[s]||[];
+        (Array.isArray(entries)?entries:[]).forEach(e=>{
+          (e.moodItems||[]).forEach(mi=>{
+            if(mi.mood)allMoods.push(mi.mood);
+            if(mi.intensity)intensities.push(mi.intensity);
+          });
+          (e.moods||[]).forEach(m=>allMoods.push(m));
+          if(e.intensity)intensities.push(e.intensity);
+        });
+      });
+      const avgIntensity=intensities.length?(intensities.reduce((a,b)=>a+b,0)/intensities.length).toFixed(1):'-';
+      const moodCount={};
+      allMoods.forEach(m=>{moodCount[m]=(moodCount[m]||0)+1;});
+      let topMood='';let topCount=0;
+      Object.entries(moodCount).forEach(([k,v])=>{if(v>topCount){topMood=k;topCount=v;}});
+      const hasEntry=sections.some(s=>{
+        const list=Array.isArray(data[s])?data[s]:[];
+        return list.some(e=>e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length));
+      });
+      rows.push({date:dk,avg:avgIntensity,mood:topMood,hasEntry});
+    }else{
+      rows.push({date:dk,avg:'-',mood:'-',hasEntry:false});
+    }
+  }
+
+  const tbody=document.getElementById('trendBody');
+  if(rows.every(r=>!r.hasEntry)){
+    tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text2);">鏈懆鏆傛棤璁板綍锛屽紑濮嬭褰曞悗鑷姩鐢熸垚瓒嬪娍</td></tr>';
+    return;
+  }
+  tbody.innerHTML=rows.map(r=>{
+    const intensityClass=r.avg!=='-'?(parseFloat(r.avg)>=7?'trend-high':parseFloat(r.avg)>=4?'trend-mid':'trend-low'):'';
+    const dateLabel=new Date(r.date+'T00:00:00').toLocaleDateString('zh-CN',{month:'short',day:'numeric',weekday:'short'});
+    let note='';
+    if(r.date===today.toISOString().slice(0,10))note='馃搶 浠婂ぉ';
+    return`<tr><td>${dateLabel}${note?' '+note:''}</td><td class="${intensityClass}">${r.avg}</td><td>${r.mood}</td><td style="color:var(--text2);font-size:0.75rem;">${note||'-'}</td></tr>`;
+  }).join('');
+}
+
+// ==================== SLIDERS ====================
+/* Slider binding is handled inline via oninput in dynamic mood entries */
+document.getElementById('moodEnergy').addEventListener('input',function(){
+  document.getElementById('energyVal').textContent=this.value;
+});
+
+// ==================== CHIP CLICKS (event delegation + intensity refresh) ====================
+document.addEventListener('click',function(e){
+  if(e.target.classList.contains('chip')){
+    const row=e.target.closest('.chip-row');
+    if(row){ e.target.classList.toggle('selected'); }
+    const chipRowId=row?row.id:'';
+    if(chipRowId&&chipRowId.endsWith('_chips')){
+      refreshIntensityUI(chipRowId.replace('_chips',''));
+    }
+  }
+});
+
+// ==================== RADIO CLICKS ====================
+document.querySelectorAll('.radio-group').forEach(g=>{
+  g.addEventListener('click',function(e){
+    if(e.target.classList.contains('radio-btn')){
+      g.querySelectorAll('.radio-btn').forEach(b=>b.classList.remove('selected'));
+      e.target.classList.add('selected');
+    }
+  });
+});
+
+// ==================== TABS ====================
+document.getElementById('tabs').addEventListener('click',function(e){
+  if(e.target.tagName==='BUTTON'){
+    this.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    const tabId=e.target.dataset.tab;
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tab-'+tabId).classList.add('active');
+    if(tabId==='trends')refreshTrends();
+  }
+});
+
+// ==================== EXPORT/IMPORT ====================
+function exportData(){
+  const all=loadAll();
+  const blob=new Blob([JSON.stringify(all,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='tt_daily_mood_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+
+// ==================== INIT ====================
+loadDay();
+fillForm();
+
+// Keyboard shortcut: Ctrl+S to save
+document.addEventListener('keydown',function(e){
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){
+    e.preventDefault();
+    const activeTab=document.querySelector('.tab-content.active');
+    if(activeTab.id==='tab-checkin')saveToday();
+    else if(activeTab.id==='tab-review')saveReview();
+    else if(activeTab.id==='tab-joy')saveJoy();
+  }
+});
+
+// Add export button to header
+const exportBtn=document.createElement('button');
+exportBtn.className='btn btn-sm btn-secondary';
+exportBtn.textContent='馃摛 瀵煎嚭';
+exportBtn.style.marginLeft='8px';
+exportBtn.onclick=exportData;
+document.querySelector('header').appendChild(exportBtn);
+
+// ==================== SERVICE WORKER ====================
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+</script>
+</body>
+</html>
