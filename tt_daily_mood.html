@@ -1063,7 +1063,7 @@ function refreshOverview(){
     const uniqueMoods=[...new Set(moods)];
 
     return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;${isToday?'border-color:var(--pink);':''}">
-      <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="toggleDetail('detail_${cardIdx}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" data-card="${cardIdx}">
         <span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span>
         <span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''} ▾</span>
       </div>
@@ -1071,12 +1071,33 @@ function refreshOverview(){
         ${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}
         ${data.diy?'<span style="color:var(--purple);">DIY</span>':''}
         ${data.weather||''} ${data.sleep?'*'+data.sleep:''} ${data.energy?'⚡'+data.energy:''}
-        <span style="color:var(--blue);cursor:pointer;margin-left:auto;" onclick="event.stopPropagation();toggleDetail('detail_${cardIdx}')">▼ 展开详情</span>
+        <span style="color:var(--blue);cursor:pointer;margin-left:auto;" data-expand="${cardIdx}" style="color:var(--blue);cursor:pointer;margin-left:auto;">▼ 点击展开/收起</span>
       </div>
-      <div style="font-size:0.72rem;color:var(--text2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}${data.diy?'<span style="color:var(--purple);">DIY</span>':''}${data.weather||''}${data.sleep?'星'+data.sleep:''}${data.energy?'⚡'+data.energy:''}<span style="color:var(--blue);cursor:pointer;margin-left:auto;" onclick="event.stopPropagation();toggleDetail('detail_${cardIdx}')">▼ 展开详情</span></div>
+      <div style="font-size:0.72rem;color:var(--text2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}${data.diy?'<span style="color:var(--purple);">DIY</span>':''}${data.weather||''}${data.sleep?'星'+data.sleep:''}${data.energy?'⚡'+data.energy:''}<span style="color:var(--blue);cursor:pointer;margin-left:auto;" data-expand="${cardIdx}" style="color:var(--blue);cursor:pointer;margin-left:auto;">▼ 点击展开/收起</span></div>
       <div id="detail_${cardIdx}" style="display:none;margin-top:10px;">${detailHTML}</div>
     </div>`;
   }).join('');
+  
+  // Event delegation for expand/collapse
+  const ovList = document.getElementById('overviewList');
+  if(ovList){
+    ovList.onclick = function(e){
+      let card = e.target.closest('[data-card]');
+      if(!card) return;
+      let cardIdx = card.getAttribute('data-card');
+      let detail = document.getElementById('detail_'+cardIdx);
+      if(detail){
+        detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+      }
+      // Also check if clicked on expand button
+      if(e.target.hasAttribute('data-expand')){
+        e.stopPropagation();
+        let idx2 = e.target.getAttribute('data-expand');
+        let d2 = document.getElementById('detail_'+idx2);
+        if(d2) d2.style.display = d2.style.display === 'none' ? 'block' : 'none';
+      }
+    };
+  }
 }
 
 function toggleDetail(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==="none"?"block":"none";}
