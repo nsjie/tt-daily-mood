@@ -462,14 +462,17 @@ nav.tabs button.active{color:var(--dragon);border-bottom-color:var(--dragon);}
     <h2>📅 历史记录</h2>
     <div id="overviewList" style="max-height:70vh;overflow-y:auto;"></div>
   </div>
-  <div class="card" style="border-left:3px solid var(--orange);">
-    <h2>☁️ 云端同步</h2>
-    <p style="font-size:0.82rem;color:var(--text2);margin-bottom:12px;">同步数据到 GitHub，换设备也能加载。</p>
+      <div id="overviewList" style="max-height:70vh;overflow-y:auto;"></div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--green);">
+    <h2>📦 数据备份</h2>
+    <p style="font-size:0.82rem;color:var(--text2);margin-bottom:12px;">导出数据为JSON文件，或从文件恢复。</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn btn-sm" onclick="cloudSave()">⬆️ 上传云端</button>
-      <button class="btn btn-sm btn-secondary" onclick="cloudLoad()">⬇️ 从云端加载</button>
+      <button class="btn btn-sm" onclick="doExport()">📤 导出</button>
+      <button class="btn btn-sm btn-secondary" onclick="document.getElementById('importFile').click()">📥 导入</button>
+      <input type="file" id="importFile" accept=".json" style="display:none;" onchange="doImport(event)">
     </div>
-    <p id="cloudMsg" style="font-size:0.78rem;color:var(--text2);margin-top:8px;"></p>
+    <p id="backupMsg" style="font-size:0.78rem;color:var(--text2);margin-top:8px;"></p>
   </div>
 </div>
 
@@ -1129,187 +1132,46 @@ function refreshOverview(){
 
 function toggleDetail(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==="none"?"block":"none";}
 
-// ==================== CLOUD SYNC ====================
-async function cloudSave(){
-  const all=loadAll();
-  const dates=Object.keys(all);
-  if(dates.length===0){setCloudMsg('没有数据可上传','var(--red)');return;}
-  setCloudMsg('上传中...','var(--text2)');
-  try{
-    let tokenVal=localStorage.getItem('gh_token');
-    if(!tokenVal){const t=prompt('请输入 GitHub Token（仅保存在本地浏览器）：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(all))));
-    let sha='';
-    try{
-      const check=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});
-      if(check.ok){const j=await check.json();sha=j.sha;}
-    }catch(e){}
-    const body=JSON.stringify({message:'update mood data',content,sha:sha||undefined,branch:'main'});
-    const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{method:'PUT',headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'},body});
-    if(resp.ok){setCloudMsg('✅ 上传成功！('+dates.length+'天记录)','var(--green)');}
-    else{setCloudMsg('❌ 上传失败，Token可能无效','var(--red)');}
-  }catch(e){setCloudMsg('❌ 网络错误 '+e.message,'var(--red)');}
-}
-async function cloudLoad(){
-  setCloudMsg('下载中...','var(--text2)');
-  try{
-    let tokenVal=localStorage.getItem('gh_token');
-    if(!tokenVal){const t=prompt('请输入 GitHub Token：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
-    const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});
-    if(!resp.ok){setCloudMsg('❌ 云端暂无数据或Token无效','var(--red)');return;}
-    const j=await resp.json();
-    const data=JSON.parse(decodeURIComponent(escape(atob(j.content))));
-    saveAll(data);
-    setCloudMsg('✅ 加载成功！('+Object.keys(data).length+'天记录)','var(--green)');
-    loadDay();fillForm();refreshOverview();
-  }catch(e){setCloudMsg('❌ 加载失败','var(--red)');}
-}
-function setCloudMsg(msg,color){const el=document.getElementById('cloudMsg');if(el){el.textContent=msg;el.style.color=color;}}
-
-
-// ==================== BACKFILL ====================
-let backfillDate = new Date().toISOString().slice(0,10);
-var bfSex=false,bfDiy=false,bfToys=false;
-function bfToggleSex(v){bfSex=v;document.getElementById('bfSexYes').classList.toggle('active',v);document.getElementById('bfSexNo').classList.toggle('active',!v);document.querySelectorAll('.bf-sex-opt').forEach(function(e){e.style.display=v?'block':'none';});document.querySelectorAll('.bf-no-sex').forEach(function(e){e.style.display=v?'none':'block';});if(!v){bfToggleDiy(bfDiy);}else{document.querySelectorAll('.bf-diy-opt').forEach(function(e){e.style.display='none';});}}
-function bfToggleDiy(v){bfDiy=v;document.getElementById('bfDiyYes').classList.toggle('active',v);document.getElementById('bfDiyNo').classList.toggle('active',!v);document.querySelectorAll('.bf-diy-opt').forEach(function(e){e.style.display=v?'block':'none';});if(!v)bfToggleToys(false);}
-function bfToggleToys(v){bfToys=v;document.getElementById('bfToysYes').classList.toggle('active',v);document.getElementById('bfToysNo').classList.toggle('active',!v);}
-function bfAddJoy(){var list=document.getElementById('bfJoyList');var i=list.children.length;var em=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚','🌻','🍰'];var li=document.createElement('li');li.className='joy-item';li.innerHTML='<span class="emoji">'+em[i%em.length]+'</span><textarea id="bfJoy'+i+'" placeholder="记录一件温暖小事..."></textarea>';list.appendChild(li);}
-
-function loadBackfillDate(){
-  backfillDate = document.getElementById('backfillDate').value;
-  if(!backfillDate) return;
-  initBackfillForm();
-}
-function initBackfillForm(){
-  const data = getDayData(backfillDate);
-  document.getElementById('bfWeather').value = data.weather||'';
-  setRadio('bfSleepGroup', data.sleep);
-  document.getElementById('bfEnergy').value = data.energy||5;
-  document.getElementById('bfEnergyVal').textContent = data.energy||5;
-  document.getElementById('bfNote').value = data.backfillNote||'';
-  ['morning','noon','afternoon','evening'].forEach(function(s){
-    var entries = Array.isArray(data[s]) ? data[s] : [];
-    if(entries.length===0) entries = [{event:'',moodItems:[],bodySense:'',regulation:''}];
-    fillBfMood(s, entries);
-  });
-}
-function fillBfMood(section, entries){
-  var container = document.getElementById('bfMood'+section.charAt(0).toUpperCase()+section.slice(1));
-  if(!container) return;
-  var MOODS = ['😊 开心','😌 平静','😰 焦虑','😤 烦躁','😴 疲惫','😢 难过','😡 愤怒','🤩 兴奋','😞 低落','😐 无聊','🤔 困惑','🙏 感恩','💬 其他'];
-  var html = '';
-  entries.forEach(function(e,i){
-    var sid='bf_'+section+i;
-    var selected = (e.moodItems||[]).map(function(m){return m.mood;});
-    html += '<div class="mood-block '+section+'" style="margin-bottom:12px;">';
-    html += '<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.75rem;color:var(--text2);">#'+(i+1)+'</span></div>';
-    html += '<div class="form-group"><label>事件简述</label><textarea id="'+sid+'_event" placeholder="发生了什么？">'+(e.event||'')+'</textarea></div>';
-    html += '<div class="form-group"><label>情绪（可多选）</label><div class="chip-row" id="'+sid+'_chips" data-bf-sid="'+sid+'">';
-    MOODS.forEach(function(c){ html += '<span class="chip'+(selected.indexOf(c)>=0?' selected':'')+'">'+c+'</span>'; });
-    html += '</div></div>';
-    html += '<div class="form-group bf-intensity-group" id="'+sid+'_intGroup">';
-    if(e.moodItems&&e.moodItems.length){
-      html += '<label style="margin-bottom:6px;">情绪强度 (1-10)</label>';
-      e.moodItems.forEach(function(mi,j){
-        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:0.82rem;min-width:85px;">'+mi.mood+'</span><input type="range" id="'+sid+'_int_'+j+'" min="1" max="10" value="'+(mi.intensity||5)+'" data-target="'+sid+'_intv_'+j+'" style="flex:1;accent-color:var(--purple);"><span id="'+sid+'_intv_'+j+'" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">'+(mi.intensity||5)+'</span></div>';
-      });
-    }else if(e.moods&&e.moods.length){
-      html += '<label style="margin-bottom:6px;">情绪强度 (1-10)</label>';
-      e.moods.forEach(function(m,j){
-        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:0.82rem;min-width:85px;">'+m+'</span><input type="range" id="'+sid+'_int_'+j+'" min="1" max="10" value="5" data-target="'+sid+'_intv_'+j+'" style="flex:1;accent-color:var(--purple);"><span id="'+sid+'_intv_'+j+'" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">5</span></div>';
-      });
+// ==================== EXPORT / IMPORT ====================
+function doExport(){
+  var all=loadAll();
+  var json=JSON.stringify(all,null,2);
+  var blob=new Blob([json],{type:'text/plain'});
+  var fname='tt_daily_mood_'+new Date().toISOString().slice(0,10)+'.json';
+  if(navigator.share && navigator.canShare){
+    var file=new File([blob],fname,{type:'text/plain'});
+    if(navigator.canShare({files:[file]})){
+      navigator.share({files:[file],title:'数据备份',text:'情绪记录数据备份'}).catch(function(){});
+      setMsg('📤 已打开分享面板');
+      return;
     }
-    html += '</div>';
-    html += '</div>';
-  });
-  container.innerHTML = html;
-  // Bind all range inputs inside this container
-  container.querySelectorAll('input[type=range][data-target]').forEach(function(r){
-    r.oninput = function(){
-      var target = document.getElementById(this.getAttribute('data-target'));
-      if(target) target.textContent = this.value;
-    };
-  });
-}
-function addBfMoodEntry(section){
-  var data = getDayData(backfillDate);
-  var entries = Array.isArray(data[section]) ? data[section] : [];
-  entries.push({event:'',moodItems:[],bodySense:'',regulation:''});
-  data[section] = entries;
-  setDayData(backfillDate, data);
-  fillBfMood(section, entries);
-}
-function saveBackfillQuick(){
-  var data = getDayData(backfillDate);
-  data.weather = document.getElementById('bfWeather').value;
-  data.sleep = getRadio('bfSleepGroup');
-  data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
-  data.weight = document.getElementById('bfWeight').value;
-  data.breakfast = document.getElementById('bfBreakfast').value;
-  data.water = document.getElementById('bfWater').value;
-  data.fruit = document.getElementById('bfFruit').value;
-  data.coffee = document.getElementById('bfCoffee').value;
-  data.coldDrink = document.getElementById('bfColdDrink').value;
-  data.alcohol = document.getElementById('bfAlcohol').value;
-  data.exercise = document.getElementById('bfExercise').value;
-  data.exerciseMin = document.getElementById('bfExerciseMin').value;
-  data.bowel = document.getElementById('bfBowel').value;
-  data.sexCount = bfSex?document.getElementById('bfSexCount').value:'';data.sexMeasure = bfSex?document.getElementById('bfSexMeasure').value:'';
-  data.diy = !bfSex&&bfDiy; data.toys = !bfSex&&bfDiy&&bfToys;
-  setDayData(backfillDate, data);
-}
-function saveBackfillMoods(){
-  var data = getDayData(backfillDate);
-  data.morning = collectBfMoodEntries('morning');
-  setDayData(backfillDate, data);
-}
-function saveBackfillAll(){
-  var data = getDayData(backfillDate);
-  data.weather = document.getElementById('bfWeather').value;
-  data.sleep = getRadio('bfSleepGroup');
-  data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
-  data.weight = document.getElementById('bfWeight').value;
-  data.breakfast = document.getElementById('bfBreakfast').value;
-  data.water = document.getElementById('bfWater').value;
-  data.fruit = document.getElementById('bfFruit').value;
-  data.coffee = document.getElementById('bfCoffee').value;
-  data.coldDrink = document.getElementById('bfColdDrink').value;
-  data.alcohol = document.getElementById('bfAlcohol').value;
-  data.exercise = document.getElementById('bfExercise').value;
-  data.exerciseMin = document.getElementById('bfExerciseMin').value;
-  data.bowel = document.getElementById('bfBowel').value;
-  data.sex = bfSex; data.sexCount = bfSex?document.getElementById('bfSexCount').value:''; data.sexMeasure = bfSex?document.getElementById('bfSexMeasure').value:'';
-  data.diy = !bfSex&&bfDiy; data.toys = !bfSex&&bfDiy&&bfToys;
-  // Review
-  data.review = {q1:document.getElementById('bfQ1').value,q2:document.getElementById('bfQ2').value,q3:document.getElementById('bfQ3').value,q4:document.getElementById('bfQ4').value,extra:document.getElementById('bfExtra').value};
-  // Joys
-  var joys=[];
-  for(var j=1;j<=20;j++){var el=document.getElementById('bfJoy'+j);if(el&&el.value.trim())joys.push(el.value.trim());else if(!el)break;}
-  data.joys = joys;
-  ['morning','noon','afternoon','evening'].forEach(function(s){ data[s] = collectBfMoodEntries(s); });
-  setDayData(backfillDate, data);
-}
-function collectBfMoodEntries(section){
-  var entries=[];
-  var container=document.getElementById('bfMood'+section.charAt(0).toUpperCase()+section.slice(1));
-  if(!container)return[];
-  for(var i=0;;i++){
-    var sid='bf_'+section+i;
-    var evEl=document.getElementById(sid+'_event');
-    if(!evEl)break;
-    var moodItems=[];
-    var chipRow=document.getElementById(sid+'_chips');
-    if(chipRow){
-      var chips=chipRow.querySelectorAll('.chip.selected');
-      chips.forEach(function(c,j){
-        var intEl=document.getElementById(sid+'_int_'+j);
-        moodItems.push({mood:c.textContent.trim(),intensity:intEl?parseInt(intEl.value)||5:5});
-      });
-    }
-    entries.push({event:evEl.value, moodItems:moodItems, bodySense:'', regulation:''});
   }
-  return entries.length?entries:[{event:'',moodItems:[],bodySense:'',regulation:''}];
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=fname;
+  a.click();URL.revokeObjectURL(url);
+  setMsg('📤 已下载');
 }
+function doImport(e){
+  var file=e.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(){
+    try{
+      var data=JSON.parse(reader.result);
+      if(typeof data!=='object'||Object.keys(data).length===0){setMsg('❌ 文件格式无效','var(--red)');return;}
+      var all=loadAll();
+      Object.keys(data).forEach(function(dk){all[dk]=data[dk];});
+      saveAll(all);
+      setMsg('✅ 成功导入 '+Object.keys(data).length+' 天记录','var(--green)');
+      loadDay();fillForm();refreshOverview();
+    }catch(ex){setMsg('❌ 文件解析失败','var(--red)');}
+  };
+  reader.readAsText(file);
+}
+function setMsg(msg,color){var el=document.getElementById('backupMsg');if(el){el.textContent=msg;el.style.color=color||'var(--text2)';}}
+function exportData(){ doExport(); }
+
 // ==================== INIT ====================
 loadDay();
 fillForm();
