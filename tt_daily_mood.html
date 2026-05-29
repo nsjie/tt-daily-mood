@@ -972,6 +972,10 @@ function refreshOverview(){
     if(data.sleep){sleepSum+=parseInt(data.sleep)||0;sleepCount++;}
     if(data.energy){energySum+=parseInt(data.energy)||0;energyCount++;}
   });
+  let sexDays=0,sexTotal=0;
+  dates.forEach(dk=>{const d=all[dk];if(d.sex){sexDays++;sexTotal+=parseInt(d.sexCount)||1;}});
+  const avgSex=totalDays?((sexDays/totalDays*100).toFixed(0)+'% ('+sexDays+'天)'):'-';
+
   const avgMood=totalMoods?(moodSum/totalMoods).toFixed(1):'-';
   const avgSleep=sleepCount?(sleepSum/sleepCount).toFixed(1):'-';
   const avgEnergy=energyCount?(energySum/energyCount).toFixed(1):'-';
@@ -979,6 +983,7 @@ function refreshOverview(){
   document.getElementById('overviewStats').innerHTML=`
     <div class="proj-card"><div class="amount" style="color:var(--green);">${totalDays}</div><div class="period">📅 记录天数</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--pink);">${avgMood}</div><div class="period">😊 平均情绪</div></div>
+    <div class="proj-card"><div class="amount" style="color:var(--red);font-size:1.3rem;">${avgSex}</div><div class="period">❤️ 爱爱频率</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--blue);">${avgSleep}</div><div class="period">⭐ 平均睡眠</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--orange);">${avgEnergy}</div><div class="period">⚡ 平均精力</div></div>
     <div class="proj-card"><div class="amount" style="font-size:0.75rem;color:var(--purple);">${topMoods||'暂无'}</div><div class="period">🔥 常见情绪</div></div>`;
