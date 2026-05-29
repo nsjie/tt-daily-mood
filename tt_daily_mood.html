@@ -1062,6 +1062,12 @@ function refreshOverview(){
         <span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span>
         <span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''} ▾</span>
       </div>
+      <div style="font-size:0.72rem;color:var(--text2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        ${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}
+        ${data.diy?'<span style="color:var(--purple);">DIY</span>':''}
+        ${data.weather||''} ${data.sleep?'*'+data.sleep:''} ${data.energy?'⚡'+data.energy:''}
+        <span style="color:var(--blue);cursor:pointer;margin-left:auto;" onclick="event.stopPropagation();toggleDetail('detail_${cardIdx}')">▼ 展开详情</span>
+      </div>
       <div id="detail_${cardIdx}" style="display:none;margin-top:10px;">${detailHTML}</div>
     </div>`;
   }).join('');
