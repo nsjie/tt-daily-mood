@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<title>鑰冩媺灏忔湅鍙嬬殑姣涚粧缁掕浜嬫湰</title>
+<title>考拉小朋友的毛绒绒记事本</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f1117">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="姣涚粧缁掕浜嬫湰">
+<meta name="apple-mobile-web-app-title" content="毛绒绒记事本">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -39,9 +39,9 @@ body{
 }
 
 /* cute corner decorations */
-body::before{content:'馃崜 馃惃 馃崐 鈾?馃惁鈥嶐煍?馃悏';position:fixed;top:4px;right:12px;
+body::before{content:'🍓 🐨 🍊 ♒ 🐦‍🔥 🐉';position:fixed;top:4px;right:12px;
   font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
-body::after{content:'馃崐 馃悏 馃崜 鈾?馃惁鈥嶐煍?馃惃';position:fixed;bottom:4px;left:12px;
+body::after{content:'🍊 🐉 🍓 ♒ 🐦‍🔥 🐨';position:fixed;bottom:4px;left:12px;
   font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
 
 header{
@@ -55,7 +55,7 @@ header h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6
 header .subtitle{font-size:0.72rem;color:var(--text2);}
 
 /* cute header floating emojis */
-header::after{content:'馃崜馃崐馃惃';position:absolute;right:50px;top:6px;
+header::after{content:'🍓🍊🐨';position:absolute;right:50px;top:6px;
   font-size:14px;opacity:0.5;pointer-events:none;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
@@ -207,7 +207,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   padding:18px 22px; margin-bottom:16px;
 }
 .tip-box .tip{font-size:0.85rem;color:var(--text);margin-bottom:6px;padding-left:16px;position:relative;}
-.tip-box .tip::before{content:'馃挕';position:absolute;left:-4px;top:0;}
+.tip-box .tip::before{content:'💡';position:absolute;left:-4px;top:0;}
 
 /* Responsive */
 @media(max-width:640px){
@@ -227,131 +227,131 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 <body>
 
 <header>
-  <div><h1>馃惃 鑰冩媺灏忔湅鍙嬬殑姣涚粧缁掕浜嬫湰</h1><div class="subtitle">鎵€鏈夋儏缁兘鏈夊畠鐨勬剰涔?/div></div>
-  <button class="btn btn-sm btn-secondary" onclick="switchDate()">馃搮 鍒囨崲鏃ユ湡</button>
+  <div><h1>🐨 考拉小朋友的毛绒绒记事本</h1><div class="subtitle">所有情绪都有它的意义</div></div>
+  <button class="btn btn-sm btn-secondary" onclick="switchDate()">📅 切换日期</button>
 </header>
 
 <nav class="tabs" id="tabs">
-  <button class="active" data-tab="checkin">馃搵 浠婃棩璁板綍</button>
-  <button data-tab="review">馃攳 姣忔棩澶嶇洏</button>
-  <button data-tab="joy">鉁?灏忕‘骞?/button>
-  <button data-tab="trends">馃搳 鏈懆瓒嬪娍</button>
+  <button class="active" data-tab="checkin">📋 今日记录</button>
+  <button data-tab="review">🔍 每日复盘</button>
+  <button data-tab="joy">✨ 小确幸</button>
+  <button data-tab="trends">📊 本周趋势</button>
 </nav>
 
-<!-- ============ TAB 1: 浠婃棩璁板綍 ============ -->
+<!-- ============ TAB 1: 今日记录 ============ -->
 <div class="tab-content active" id="tab-checkin">
   <div class="tip-box">
-    <div class="tip">涓嶆眰瀹岀編锛氬摢鎬曞彧璁颁竴鍙ヨ瘽涔熸瘮涓嶈濂?/div>
-    <div class="tip">涓嶅畾鏃惰褰曪細鎰熻鏈夋儏缁椂灏卞彲浠ヨ褰?/div>
-    <div class="tip">鍏佽鎯呯华瀛樺湪锛氭墍鏈夋儏缁兘鏈夊畠鐨勬剰涔夛紝鏃犻渶璇勫垽濂藉潖</div>
-    <div class="tip">瀵绘壘妯″紡锛氬嚑鍛ㄥ悗鍥炵湅锛屽彲鑳戒細鍙戠幇鎯呯华瑙勫緥鍜岃Е鍙戝洜绱?/div>
+    <div class="tip">不求完美：哪怕只记一句话也比不记好</div>
+    <div class="tip">不定时记录：感觉有情绪时就可以记录</div>
+    <div class="tip">允许情绪存在：所有情绪都有它的意义，无需评判好坏</div>
+    <div class="tip">寻找模式：几周后回看，可能会发现情绪规律和触发因素</div>
   </div>
 
-  <!-- ---- 鍩烘湰淇℃伅 ---- -->
+  <!-- ---- 基本信息 ---- -->
   <div class="card" style="border-left:3px solid var(--purple);">
-    <h2>馃搶 鍩烘湰淇℃伅</h2>
-    <div class="form-row"><div class="form-group"><label>鏃ユ湡</label><input type="date" id="moodDate"></div><div class="form-group"><label>澶╂皵</label><select id="moodWeather"><option value="">---</option><option>鈽€锔?鏅?/option><option>鉀?澶氫簯</option><option>鈽侊笍 闃村ぉ</option><option>馃對锔?灏忛洦</option><option>馃導锔?涓洦</option><option>馃導锔?澶ч洦</option><option>鉀堬笍 鏆撮闆?/option><option>馃寑 鍙伴</option><option>馃尐锔?灏忛洩</option><option>鉂勶笍 涓洩</option><option>鉂勶笍 澶ч洩</option><option>馃尐锔?鏆撮闆?/option><option>馃尗锔?闆鹃溇</option><option>馃挩 澶ч</option></select></div></div>
+    <h2>📌 基本信息</h2>
+    <div class="form-row"><div class="form-group"><label>日期</label><input type="date" id="moodDate"></div><div class="form-group"><label>天气</label><select id="moodWeather"><option value="">---</option><option>☀️ 晴</option><option>⛅ 多云</option><option>☁️ 阴天</option><option>🌦️ 小雨</option><option>🌧️ 中雨</option><option>🌧️ 大雨</option><option>⛈️ 暴风雨</option><option>🌀 台风</option><option>🌨️ 小雪</option><option>❄️ 中雪</option><option>❄️ 大雪</option><option>🌨️ 暴风雪</option><option>🌫️ 雾霾</option><option>💨 大风</option></select></div></div>
     <div class="form-row">
-      <div class="form-group"><label>鐫＄湢璐ㄩ噺</label><div class="radio-group" id="sleepGroup"><span class="radio-btn" data-v="1">猸?/span><span class="radio-btn" data-v="2">猸愨瓙</span><span class="radio-btn" data-v="3">猸愨瓙猸?/span><span class="radio-btn" data-v="4">猸愨瓙猸愨瓙</span><span class="radio-btn" data-v="5">猸愨瓙猸愨瓙猸?/span></div></div>
-      <div class="form-group"><label>绮惧姏姘村钩 (1-10)</label><div class="slider-row"><input type="range" id="moodEnergy" min="1" max="10" value="5"><span class="val" id="energyVal">5</span></div></div>
+      <div class="form-group"><label>睡眠质量</label><div class="radio-group" id="sleepGroup"><span class="radio-btn" data-v="1">⭐</span><span class="radio-btn" data-v="2">⭐⭐</span><span class="radio-btn" data-v="3">⭐⭐⭐</span><span class="radio-btn" data-v="4">⭐⭐⭐⭐</span><span class="radio-btn" data-v="5">⭐⭐⭐⭐⭐</span></div></div>
+      <div class="form-group"><label>精力水平 (1-10)</label><div class="slider-row"><input type="range" id="moodEnergy" min="1" max="10" value="5"><span class="val" id="energyVal">5</span></div></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>鏄惁涓虹敓鐞嗘湡</label><div class="toggle-row"><button class="toggle-btn" id="periodYes" onclick="togglePeriod(true)">鏄?/button><button class="toggle-btn active" id="periodNo" onclick="togglePeriod(false)">鍚?/button></div></div>
-      <div class="form-group period-opt" id="periodFlowGroup" style="display:none;"><label>鐢熺悊鏈熼噺</label><div class="radio-group" id="flowGroup"><span class="radio-btn" data-v="灏?>灏?/span><span class="radio-btn" data-v="涓?>涓?/span><span class="radio-btn" data-v="澶?>澶?/span></div></div>
-      <div class="form-group period-opt" style="display:none;"><label>鐥涚粡绋嬪害</label><div class="radio-group" id="painGroup"><span class="radio-btn" data-v="鏃?>鏃?/span><span class="radio-btn" data-v="杞?>杞?/span><span class="radio-btn" data-v="涓?>涓?/span><span class="radio-btn" data-v="閲?>閲?/span></div></div>
-<div class="form-group no-period-opt"><label>鐧藉甫鏄惁姝ｅ父</label><select id="moodDischarge"><option value="">---</option><option value="姝ｅ父">鉁?姝ｅ父</option><option value="寮傚父">鈿狅笍 寮傚父</option></select></div>
+      <div class="form-group"><label>是否为生理期</label><div class="toggle-row"><button class="toggle-btn" id="periodYes" onclick="togglePeriod(true)">是</button><button class="toggle-btn active" id="periodNo" onclick="togglePeriod(false)">否</button></div></div>
+      <div class="form-group period-opt" id="periodFlowGroup" style="display:none;"><label>生理期量</label><div class="radio-group" id="flowGroup"><span class="radio-btn" data-v="少">少</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="多">多</span></div></div>
+      <div class="form-group period-opt" style="display:none;"><label>痛经程度</label><div class="radio-group" id="painGroup"><span class="radio-btn" data-v="无">无</span><span class="radio-btn" data-v="轻">轻</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="重">重</span></div></div>
+<div class="form-group no-period-opt"><label>白带是否正常</label><select id="moodDischarge"><option value="">---</option><option value="正常">✅ 正常</option><option value="异常">⚠️ 异常</option></select></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>鏄惁鐖辩埍</label><div class="toggle-row"><button class="toggle-btn" id="sexYes" onclick="toggleSex(true)">鏄?/button><button class="toggle-btn active" id="sexNo" onclick="toggleSex(false)">鍚?/button></div></div>
-      <div class="form-group sex-opt" style="display:none;"><label>鐖辩埍娆℃暟</label><input type="number" id="moodSexCount" min="0" placeholder="濡?1"></div>
-      <div class="form-group sex-opt" style="display:none;"><label>鎺柦</label><select id="moodSexMeasure"><option value="">---</option><option value="鏃?>鉂?鏃?/option><option value="瀹夊叏濂?>馃敀 瀹夊叏濂?/option><option value="浣撳">馃挦 浣撳</option><option value="鐭晥鑽?>馃拪 鐭晥鑽?/option><option value="绱ф€ラ伩瀛曡嵂">馃拪 绱ф€ラ伩瀛曡嵂</option><option value="鍏朵粬">馃敼 鍏朵粬</option></select></div>
-      <div class="form-group no-sex-opt" style="display:none;"><label>鏄惁DIY</label><div class="toggle-row"><button class="toggle-btn" id="diyYes" onclick="toggleDiy(true)">鏄?/button><button class="toggle-btn active" id="diyNo" onclick="toggleDiy(false)">鍚?/button></div></div>
-      <div class="form-group diy-opt" style="display:none;"><label>鏄惁浣跨敤Toys</label><div class="toggle-row"><button class="toggle-btn" id="toysYes" onclick="toggleToys(true)">鏄?/button><button class="toggle-btn active" id="toysNo" onclick="toggleToys(false)">鍚?/button></div></div>
-      <div class="form-group"><label>浣撻噸 (kg)</label><input type="number" id="moodWeight" placeholder="濡?55.0" step="0.1"></div>
+      <div class="form-group"><label>是否爱爱</label><div class="toggle-row"><button class="toggle-btn" id="sexYes" onclick="toggleSex(true)">是</button><button class="toggle-btn active" id="sexNo" onclick="toggleSex(false)">否</button></div></div>
+      <div class="form-group sex-opt" style="display:none;"><label>爱爱次数</label><input type="number" id="moodSexCount" min="0" placeholder="如 1"></div>
+      <div class="form-group sex-opt" style="display:none;"><label>措施</label><select id="moodSexMeasure"><option value="">---</option><option value="无">❌ 无</option><option value="安全套">🔒 安全套</option><option value="体外">💦 体外</option><option value="短效药">💊 短效药</option><option value="紧急避孕药">💊 紧急避孕药</option><option value="其他">🔹 其他</option></select></div>
+      <div class="form-group no-sex-opt" style="display:none;"><label>是否DIY</label><div class="toggle-row"><button class="toggle-btn" id="diyYes" onclick="toggleDiy(true)">是</button><button class="toggle-btn active" id="diyNo" onclick="toggleDiy(false)">否</button></div></div>
+      <div class="form-group diy-opt" style="display:none;"><label>是否使用Toys</label><div class="toggle-row"><button class="toggle-btn" id="toysYes" onclick="toggleToys(true)">是</button><button class="toggle-btn active" id="toysNo" onclick="toggleToys(false)">否</button></div></div>
+      <div class="form-group"><label>体重 (kg)</label><input type="number" id="moodWeight" placeholder="如 55.0" step="0.1"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>鏃╅</label><select id="moodBreakfast"><option value="">---</option><option value="鍚冧簡">鉁?鍚冧簡</option><option value="娌″悆">鉂?娌″悆</option></select></div>
-      <div class="form-group"><label>鍠濇按 (鏉?</label><input type="number" id="moodWater" min="0" max="20" placeholder="濡?6" value=""></div>
-      <div class="form-group"><label>姘存灉鎽勫叆</label><select id="moodFruit"><option value="">---</option><option value="鏈?>鉁?鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
-      <div class="form-group"><label>鍠濆挅鍟?/label><select id="moodCoffee"><option value="">---</option><option value="鏈?>鈽?鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>早餐</label><select id="moodBreakfast"><option value="">---</option><option value="吃了">✅ 吃了</option><option value="没吃">❌ 没吃</option></select></div>
+      <div class="form-group"><label>喝水 (杯)</label><input type="number" id="moodWater" min="0" max="20" placeholder="如 6" value=""></div>
+      <div class="form-group"><label>水果摄入</label><select id="moodFruit"><option value="">---</option><option value="有">✅ 有</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>喝咖啡</label><select id="moodCoffee"><option value="">---</option><option value="有">☕ 有</option><option value="无">❌ 无</option></select></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>鐢熷喎楗搧</label><select id="moodColdDrink"><option value="">---</option><option value="鏈?>馃 鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
-      <div class="form-group"><label>楗厭</label><select id="moodAlcohol"><option value="">---</option><option value="鏈?>馃嵑 鏈?/option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>生冷饮品</label><select id="moodColdDrink"><option value="">---</option><option value="有">🧊 有</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>饮酒</label><select id="moodAlcohol"><option value="">---</option><option value="有">🍺 有</option><option value="无">❌ 无</option></select></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>杩愬姩</label><select id="moodExercise"><option value="">---</option><option value="鏈夋哀">馃弮 鏈夋哀</option><option value="鍔涢噺">馃弸锔?鍔涢噺</option><option value="鐟滀冀">馃 鐟滀冀</option><option value="鏁ｆ">馃毝 鏁ｆ</option><option value="鏃?>鉂?鏃?/option></select></div>
-      <div class="form-group"><label>杩愬姩鏃堕暱 (鍒嗛挓)</label><input type="number" id="moodExerciseMin" min="0" placeholder="濡?30"></div>
-      <div class="form-group"><label>鎺掍究</label><select id="moodBowel"><option value="">---</option><option value="姝ｅ父">鉁?姝ｅ父</option><option value="渚跨">馃槪 渚跨</option><option value="鑵规郴">馃挩 鑵规郴</option><option value="鏃?>鉂?鏃?/option></select></div>
+      <div class="form-group"><label>运动</label><select id="moodExercise"><option value="">---</option><option value="有氧">🏃 有氧</option><option value="力量">🏋️ 力量</option><option value="瑜伽">🧘 瑜伽</option><option value="散步">🚶 散步</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>运动时长 (分钟)</label><input type="number" id="moodExerciseMin" min="0" placeholder="如 30"></div>
+      <div class="form-group"><label>排便</label><select id="moodBowel"><option value="">---</option><option value="正常">✅ 正常</option><option value="便秘">😣 便秘</option><option value="腹泻">💨 腹泻</option><option value="无">❌ 无</option></select></div>
     </div>
   </div>
 
-  <!-- ---- 鎯呯华璁板綍锛?鏃舵锛屾瘡鏉″彲鍔ㄦ€佸鍒狅級 ---- -->
+  <!-- ---- 情绪记录（4时段，每条可动态增删） ---- -->
   <div class="card" style="border-left:3px solid var(--yellow);">
-    <h2>馃寘 涓婂崍鎯呯华</h2>
+    <h2>🌅 上午情绪</h2>
     <div class="mood-entries" id="moodMorning"></div>
-    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('morning')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('morning')" style="margin-top:6px;">+ 添加一条</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--orange);">
-    <h2>鈽€锔?涓崍鎯呯华</h2>
+    <h2>☀️ 中午情绪</h2>
     <div class="mood-entries" id="moodNoon"></div>
-    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('noon')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('noon')" style="margin-top:6px;">+ 添加一条</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--blue);">
-    <h2>馃尋锔?涓嬪崍鎯呯华</h2>
+    <h2>🌤️ 下午情绪</h2>
     <div class="mood-entries" id="moodAfternoon"></div>
-    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('afternoon')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('afternoon')" style="margin-top:6px;">+ 添加一条</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--purple);">
-    <h2>馃寵 鏅氫笂鎯呯华</h2>
+    <h2>🌙 晚上情绪</h2>
     <div class="mood-entries" id="moodEvening"></div>
-    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('evening')" style="margin-top:6px;">+ 娣诲姞涓€鏉?/button>
+    <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('evening')" style="margin-top:6px;">+ 添加一条</button>
   </div>
 
-  <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">馃捑 淇濆瓨浠婃棩璁板綍</button></div>
+  <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">💾 保存今日记录</button></div>
 </div>
 
-<!-- ============ TAB 2: 姣忔棩澶嶇洏 ============ -->
+<!-- ============ TAB 2: 每日复盘 ============ -->
 <div class="tab-content" id="tab-review">
   <div class="card" style="border-left:3px solid var(--purple);">
-    <h2>馃攳 姣忔棩澶嶇洏</h2>
-    <div class="review-item"><div class="q">1. 浠婃棩鏈€寮虹儓鐨勬儏缁槸浠€涔堬紵鏄粈涔堣Е鍙戜簡瀹冿紵</div><textarea id="reviewQ1" placeholder="鍐欎笅浣犵殑鎰熷彈..."></textarea></div>
-    <div class="review-item"><div class="q">2. 杩欎釜鎯呯华鑳屽悗锛屾垜鐪熸鐨勯渶姹傛垨鎯虫硶鏄粈涔堬紵</div><textarea id="reviewQ2" placeholder="娣卞叆鎬濊€?.."></textarea></div>
-    <div class="review-item"><div class="q">3. 浠婂ぉ鎴戝浣曞洖搴斾簡鑷繁鐨勬儏缁紵锛堝仛浜嗕粈涔?/ 娌″仛浠€涔堬級</div><textarea id="reviewQ3" placeholder="鍥為【浣犵殑搴斿鏂瑰紡..."></textarea></div>
-    <div class="review-item"><div class="q">4. 濡傛灉鍙互閲嶆潵锛屾垜浼氱敤涓嶅悓鐨勬柟寮忓鐞嗗悧锛?/div><textarea id="reviewQ4" placeholder="鍙嶆€濅笌鎴愰暱..."></textarea></div>
-    <div class="review-item"><div class="q">馃摑 鍏朵粬鎯冲鑷繁璇寸殑璇?/div><textarea id="reviewExtra" placeholder="鑷敱涔﹀啓..."></textarea></div>
-    <button class="btn" onclick="saveReview()" style="margin-top:10px;">馃捑 淇濆瓨澶嶇洏</button>
+    <h2>🔍 每日复盘</h2>
+    <div class="review-item"><div class="q">1. 今日最强烈的情绪是什么？是什么触发了它？</div><textarea id="reviewQ1" placeholder="写下你的感受..."></textarea></div>
+    <div class="review-item"><div class="q">2. 这个情绪背后，我真正的需求或想法是什么？</div><textarea id="reviewQ2" placeholder="深入思考..."></textarea></div>
+    <div class="review-item"><div class="q">3. 今天我如何回应了自己的情绪？（做了什么 / 没做什么）</div><textarea id="reviewQ3" placeholder="回顾你的应对方式..."></textarea></div>
+    <div class="review-item"><div class="q">4. 如果可以重来，我会用不同的方式处理吗？</div><textarea id="reviewQ4" placeholder="反思与成长..."></textarea></div>
+    <div class="review-item"><div class="q">📝 其他想对自己说的话</div><textarea id="reviewExtra" placeholder="自由书写..."></textarea></div>
+    <button class="btn" onclick="saveReview()" style="margin-top:10px;">💾 保存复盘</button>
   </div>
 </div>
 
-<!-- ============ TAB 3: 灏忕‘骞?============ -->
+<!-- ============ TAB 3: 小确幸 ============ -->
 <div class="tab-content" id="tab-joy">
   <div class="card" style="border-left:3px solid var(--yellow);">
-    <h2>鉁?姣忔棩灏忕‘骞?/h2>
-    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">浠婂ぉ璁╀綘鎰熷埌娓╂殩鎴栧紑蹇冪殑鍑犱欢灏忎簨锛?/p>
+    <h2>✨ 每日小确幸</h2>
+    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">今天让你感到温暖或开心的几件小事：</p>
     <ul class="joy-list" id="joyList">
-      <li class="joy-item"><span class="emoji">馃専</span><textarea id="joy1" placeholder="濡傦細鏃╀笂鍠濆埌浜嗙壒鍒ソ鍠濈殑鍜栧暋..."></textarea></li>
-      <li class="joy-item"><span class="emoji">馃尭</span><textarea id="joy2" placeholder="濡傦細璺笂鐪嬪埌涓€鍙彲鐖辩殑灏忕尗..."></textarea></li>
-      <li class="joy-item"><span class="emoji">馃挐</span><textarea id="joy3" placeholder="濡傦細鍚屼簨甯垜甯︿簡鍗堥キ..."></textarea></li>
-      <li class="joy-item"><span class="emoji">馃崁</span><textarea id="joy4" placeholder="闅忔剰璁板綍..."></textarea></li>
-      <li class="joy-item"><span class="emoji">馃幍</span><textarea id="joy5" placeholder="闅忔剰璁板綍..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🌟</span><textarea id="joy1" placeholder="如：早上喝到了特别好喝的咖啡..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🌸</span><textarea id="joy2" placeholder="如：路上看到一只可爱的小猫..."></textarea></li>
+      <li class="joy-item"><span class="emoji">💝</span><textarea id="joy3" placeholder="如：同事帮我带了午饭..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🍀</span><textarea id="joy4" placeholder="随意记录..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🎵</span><textarea id="joy5" placeholder="随意记录..."></textarea></li>
     </ul>
-    <button class="btn btn-sm" onclick="addJoyItem()" style="margin-top:8px;">+ 娣诲姞涓€鏉?/button>
-    <button class="btn" onclick="saveJoy()" style="margin-top:10px;display:block;width:100%;">馃捑 淇濆瓨灏忕‘骞?/button>
+    <button class="btn btn-sm" onclick="addJoyItem()" style="margin-top:8px;">+ 添加一条</button>
+    <button class="btn" onclick="saveJoy()" style="margin-top:10px;display:block;width:100%;">💾 保存小确幸</button>
   </div>
 </div>
 
-<!-- ============ TAB 4: 鏈懆瓒嬪娍 ============ -->
+<!-- ============ TAB 4: 本周趋势 ============ -->
 <div class="tab-content" id="tab-trends">
   <div class="card" style="border-left:3px solid var(--blue);">
-    <h2>馃搳 鏈懆鎯呯华瓒嬪娍</h2>
+    <h2>📊 本周情绪趋势</h2>
     <div style="overflow-x:auto;">
       <table class="trend-table" id="trendTable">
-        <thead><tr><th>鏃ユ湡</th><th>鏁翠綋鎯呯华 (1-10)</th><th>涓昏鎯呯华</th><th>澶囨敞</th></tr></thead>
-        <tbody id="trendBody"><tr><td colspan="4" style="text-align:center;color:var(--text2);">鏆傛棤鏈懆鏁版嵁锛屽紑濮嬭褰曞悗鑷姩鐢熸垚</td></tr></tbody>
+        <thead><tr><th>日期</th><th>整体情绪 (1-10)</th><th>主要情绪</th><th>备注</th></tr></thead>
+        <tbody id="trendBody"><tr><td colspan="4" style="text-align:center;color:var(--text2);">暂无本周数据，开始记录后自动生成</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -360,12 +360,12 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 <!-- ============ DATE PICKER MODAL ============ -->
 <div id="dateModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;align-items:center;justify-content:center;">
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;width:90%;max-width:360px;">
-    <h2 style="margin-bottom:16px;">馃搮 閫夋嫨鏃ユ湡</h2>
+    <h2 style="margin-bottom:16px;">📅 选择日期</h2>
     <input type="date" id="pickerDate" style="width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:var(--radius-sm);font-size:1rem;margin-bottom:16px;">
     <div style="display:flex;gap:10px;">
-      <button class="btn" onclick="loadDate()">鉁?纭畾</button>
-      <button class="btn btn-secondary" onclick="document.getElementById('dateModal').style.display='none'">鍙栨秷</button>
-      <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="goToday()">馃搮 浠婂ぉ</button>
+      <button class="btn" onclick="loadDate()">✅ 确定</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('dateModal').style.display='none'">取消</button>
+      <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="goToday()">📅 今天</button>
     </div>
   </div>
 </div>
@@ -480,12 +480,12 @@ function getChips(chipGroupId){
 function fillJoys(joys){
   const container=document.getElementById('joyList');
   container.innerHTML='';
-  const emojis=['馃専','馃尭','馃挐','馃崁','馃幍','鈽?,'馃惐','馃寛','馃巵','馃摎'];
+  const emojis=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚'];
   const items=joys.length>0?joys:[''];
   items.forEach((j,i)=>{
     const li=document.createElement('li');
     li.className='joy-item';
-    li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="璁板綍涓€浠舵俯鏆栧皬浜?..">${j||''}</textarea>`;
+    li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="记录一件温暖小事...">${j||''}</textarea>`;
     container.appendChild(li);
   });
 }
@@ -499,7 +499,7 @@ function collectJoys(){
 }
 
 // ==================== DYNAMIC MOOD ENTRIES ====================
-const MOOD_CHIPS=['馃槉 寮€蹇?,'馃槍 骞抽潤','馃槹 鐒﹁檻','馃槫 鐑﹁簛','馃槾 鐤叉儷','馃槩 闅捐繃','馃槨 鎰ゆ€?,'馃ぉ 鍏村','馃槥 浣庤惤','馃槓 鏃犺亰','馃 鍥版儜','馃檹 鎰熸仼','馃挰 鍏朵粬'];
+const MOOD_CHIPS=['😊 开心','😌 平静','😰 焦虑','😤 烦躁','😴 疲惫','😢 难过','😡 愤怒','🤩 兴奋','😞 低落','😐 无聊','🤔 困惑','🙏 感恩','💬 其他'];
 
 // Normalize old data format to new moodItems format
 function normalizeEntry(e){
@@ -526,14 +526,14 @@ function fillMoodEntries(section,entries){
     div.innerHTML=`
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <span style="font-size:0.75rem;color:var(--text2);">#${idx+1}</span>
-        ${normalized.length>1?'<button class="btn btn-sm btn-danger" onclick="removeMoodEntry(\''+section+'\','+idx+')" style="padding:2px 8px;font-size:0.7rem;">鉁?鍒犻櫎</button>':''}
+        ${normalized.length>1?'<button class="btn btn-sm btn-danger" onclick="removeMoodEntry(\''+section+'\','+idx+')" style="padding:2px 8px;font-size:0.7rem;">✕ 删除</button>':''}
       </div>
-      <div class="form-group"><label>浜嬩欢绠€杩?/label><textarea id="${sid}_event" placeholder="鍙戠敓浜嗕粈涔堬紵">${entry.event||''}</textarea></div>
-      <div class="form-group"><label>鎯呯华锛堝彲澶氶€夛級</label><div class="chip-row" id="${sid}_chips">
+      <div class="form-group"><label>事件简述</label><textarea id="${sid}_event" placeholder="发生了什么？">${entry.event||''}</textarea></div>
+      <div class="form-group"><label>情绪（可多选）</label><div class="chip-row" id="${sid}_chips">
         ${MOOD_CHIPS.map(c=>`<span class="chip${selectedMoods.includes(c)?' selected':''}">${c}</span>`).join('')}
       </div></div>
       <div class="form-group mood-intensity-group" id="${sid}_intensityGroup">
-        ${entry.moodItems.length?`<label style="margin-bottom:8px;">鎯呯华寮哄害 (1-10)</label>`:''}
+        ${entry.moodItems.length?`<label style="margin-bottom:8px;">情绪强度 (1-10)</label>`:''}
         ${entry.moodItems.map((mi,i)=>`
           <div class="mood-intensity-row" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
             <span style="font-size:0.82rem;min-width:85px;">${mi.mood}</span>
@@ -542,8 +542,8 @@ function fillMoodEntries(section,entries){
           </div>
         `).join('')}
       </div>
-      <div class="form-group"><label>浣撴劅锛堣韩浣撴劅鍙楃畝杩帮級</label><textarea id="${sid}_bodySense" placeholder="濡傦細鑳搁椃銆佸績璺冲揩銆佹墜蹇冨嚭姹椼€佽儍涓嶈垝鏈?..">${entry.bodySense||''}</textarea></div>
-      <div class="form-group"><label>鑷垜璋冭妭琛屼负</label><textarea id="${sid}_regulation" placeholder="濡傦細娣卞懠鍚搞€佹暎姝ャ€佸惉闊充箰銆佹壘浜哄€捐瘔銆佸啓鏃ヨ...">${entry.regulation||''}</textarea></div>`;
+      <div class="form-group"><label>体感（身体感受简述）</label><textarea id="${sid}_bodySense" placeholder="如：胸闷、心跳快、手心出汗、胃不舒服...">${entry.bodySense||''}</textarea></div>
+      <div class="form-group"><label>自我调节行为</label><textarea id="${sid}_regulation" placeholder="如：深呼吸、散步、听音乐、找人倾诉、写日记...">${entry.regulation||''}</textarea></div>`;
     container.appendChild(div);
   });
 }
@@ -570,7 +570,7 @@ function refreshIntensityUI(sid){
   if(selectedChips.length===0){container.innerHTML='';return;}
   const moods=[];
   selectedChips.forEach((c,i)=>{moods.push({mood:c.textContent.trim(),intensity:5});});
-  container.innerHTML=`<label style="margin-bottom:8px;">鎯呯华寮哄害 (1-10)</label>
+  container.innerHTML=`<label style="margin-bottom:8px;">情绪强度 (1-10)</label>
     ${moods.map((mi,i)=>`
       <div class="mood-intensity-row" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
         <span style="font-size:0.82rem;min-width:85px;">${mi.mood}</span>
@@ -672,7 +672,7 @@ function saveToday(){
   // Flash feedback
   const btn=event.target;
   const orig=btn.textContent;
-  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.textContent='✅ 已保存！';
   btn.style.background='var(--green)';
   setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
 }
@@ -689,7 +689,7 @@ function saveReview(){
 
   const btn=event.target;
   const orig=btn.textContent;
-  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.textContent='✅ 已保存！';
   btn.style.background='var(--green)';
   setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
 }
@@ -700,7 +700,7 @@ function saveJoy(){
 
   const btn=event.target;
   const orig=btn.textContent;
-  btn.textContent='鉁?宸蹭繚瀛橈紒';
+  btn.textContent='✅ 已保存！';
   btn.style.background='var(--green)';
   setTimeout(()=>{btn.textContent=orig;btn.style.background='var(--purple)';},1500);
 }
@@ -708,10 +708,10 @@ function saveJoy(){
 function addJoyItem(){
   const list=document.getElementById('joyList');
   const i=list.children.length;
-  const emojis=['馃専','馃尭','馃挐','馃崁','馃幍','鈽?,'馃惐','馃寛','馃巵','馃摎','馃尰','馃嵃','馃巰','鉁?,'馃挮'];
+  const emojis=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚','🌻','🍰','🎀','✨','💫'];
   const li=document.createElement('li');
   li.className='joy-item';
-  li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="璁板綍涓€浠舵俯鏆栧皬浜?.."></textarea>`;
+  li.innerHTML=`<span class="emoji">${emojis[i%emojis.length]}</span><textarea id="joy${i}" placeholder="记录一件温暖小事..."></textarea>`;
   list.appendChild(li);
 }
 
@@ -780,14 +780,14 @@ function refreshTrends(){
 
   const tbody=document.getElementById('trendBody');
   if(rows.every(r=>!r.hasEntry)){
-    tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text2);">鏈懆鏆傛棤璁板綍锛屽紑濮嬭褰曞悗鑷姩鐢熸垚瓒嬪娍</td></tr>';
+    tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text2);">本周暂无记录，开始记录后自动生成趋势</td></tr>';
     return;
   }
   tbody.innerHTML=rows.map(r=>{
     const intensityClass=r.avg!=='-'?(parseFloat(r.avg)>=7?'trend-high':parseFloat(r.avg)>=4?'trend-mid':'trend-low'):'';
     const dateLabel=new Date(r.date+'T00:00:00').toLocaleDateString('zh-CN',{month:'short',day:'numeric',weekday:'short'});
     let note='';
-    if(r.date===today.toISOString().slice(0,10))note='馃搶 浠婂ぉ';
+    if(r.date===today.toISOString().slice(0,10))note='📌 今天';
     return`<tr><td>${dateLabel}${note?' '+note:''}</td><td class="${intensityClass}">${r.avg}</td><td>${r.mood}</td><td style="color:var(--text2);font-size:0.75rem;">${note||'-'}</td></tr>`;
   }).join('');
 }
@@ -860,7 +860,7 @@ document.addEventListener('keydown',function(e){
 // Add export button to header
 const exportBtn=document.createElement('button');
 exportBtn.className='btn btn-sm btn-secondary';
-exportBtn.textContent='馃摛 瀵煎嚭';
+exportBtn.textContent='📤 导出';
 exportBtn.style.marginLeft='8px';
 exportBtn.onclick=exportData;
 document.querySelector('header').appendChild(exportBtn);
