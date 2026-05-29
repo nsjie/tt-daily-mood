@@ -356,29 +356,45 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">💾 保存今日记录</button></div>
 </div>
 
-<!-- ============ TAB 4: 补打卡 ============ -->
+<!-- ============ TAB 2: 补打卡 ============ -->
 <div class="tab-content" id="tab-backfill">
   <div class="card" style="border-left:3px solid var(--orange);">
-    <h2>⏪ 补打卡录入</h2>
-    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:12px;">选择要补充记录的日期，填写当天数据。</p>
-    <div class="form-row">
-      <div class="form-group"><label>选择日期</label><input type="date" id="backfillDate" onchange="loadBackfillDate()"></div>
-      <div class="form-group"><label>天气</label><select id="bfWeather"><option value="">---</option><option>☀️ 晴</option><option>⛅ 多云</option><option>☁️ 阴天</option><option>🌦️ 小雨</option><option>🌧️ 中雨</option><option>🌧️ 大雨</option><option>⛈️ 暴风雨</option><option>🌀 台风</option><option>🌨️ 小雪</option><option>❄️ 中雪</option><option>❄️ 大雪</option><option>🌨️ 暴风雪</option><option>🌫️ 雾霾</option><option>💨 大风</option></select></div>
-    </div>
+    <h2>⏪ 补打卡 - 基本信息</h2>
+    <div class="form-row"><div class="form-group"><label>选择日期</label><input type="date" id="backfillDate" onchange="loadBackfillDate()"></div><div class="form-group"><label>天气</label><select id="bfWeather"><option value="">---</option><option>☀️ 晴</option><option>⛅ 多云</option><option>☁️ 阴天</option><option>🌦️ 小雨</option><option>🌧️ 中雨</option><option>🌧️ 大雨</option><option>⛈️ 暴风雨</option><option>🌀 台风</option><option>🌨️ 小雪</option><option>❄️ 中雪</option><option>❄️ 大雪</option><option>🌨️ 暴风雪</option><option>🌫️ 雾霾</option><option>💨 大风</option></select></div></div>
     <div class="form-row">
       <div class="form-group"><label>睡眠质量</label><div class="radio-group" id="bfSleepGroup"><span class="radio-btn" data-v="1">⭐</span><span class="radio-btn" data-v="2">⭐⭐</span><span class="radio-btn" data-v="3">⭐⭐⭐</span><span class="radio-btn" data-v="4">⭐⭐⭐⭐</span><span class="radio-btn" data-v="5">⭐⭐⭐⭐⭐</span></div></div>
       <div class="form-group"><label>精力水平 (1-10)</label><div class="slider-row"><input type="range" id="bfEnergy" min="1" max="10" value="5"><span class="val" id="bfEnergyVal">5</span></div></div>
     </div>
-    <div class="form-group"><label>简要备注</label><textarea id="bfNote" placeholder="当天整体感受或备注..." style="min-height:50px;"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>是否爱爱</label><div class="toggle-row"><button class="toggle-btn" id="bfSexYes" onclick="bfToggleSex(true)">是</button><button class="toggle-btn active" id="bfSexNo" onclick="bfToggleSex(false)">否</button></div></div>
+      <div class="form-group bf-sex-opt" style="display:none;"><label>爱爱次数</label><input type="number" id="bfSexCount" min="0" placeholder="如 1"></div>
+      <div class="form-group bf-sex-opt" style="display:none;"><label>措施</label><select id="bfSexMeasure"><option value="">---</option><option value="无">❌ 无</option><option value="安全套">🔒 安全套</option><option value="体外">💦 体外</option><option value="短效药">💊 短效药</option><option value="紧急避孕药">💊 紧急避孕药</option><option value="其他">🔹 其他</option></select></div>
+      <div class="form-group bf-no-sex" style="display:none;"><label>是否DIY</label><div class="toggle-row"><button class="toggle-btn" id="bfDiyYes" onclick="bfToggleDiy(true)">是</button><button class="toggle-btn active" id="bfDiyNo" onclick="bfToggleDiy(false)">否</button></div></div>
+      <div class="form-group bf-diy-opt" style="display:none;"><label>是否使用Toys</label><div class="toggle-row"><button class="toggle-btn" id="bfToysYes" onclick="bfToggleToys(true)">是</button><button class="toggle-btn active" id="bfToysNo" onclick="bfToggleToys(false)">否</button></div></div>
+      <div class="form-group"><label>体重 (kg)</label><input type="number" id="bfWeight" placeholder="如 55.0" step="0.1"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>早餐</label><select id="bfBreakfast"><option value="">---</option><option value="吃了">✅ 吃了</option><option value="没吃">❌ 没吃</option></select></div>
+      <div class="form-group"><label>喝水 (杯)</label><input type="number" id="bfWater" min="0" max="20" placeholder="如 6"></div>
+      <div class="form-group"><label>水果摄入</label><select id="bfFruit"><option value="">---</option><option value="有">✅ 有</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>喝咖啡</label><select id="bfCoffee"><option value="">---</option><option value="有">☕ 有</option><option value="无">❌ 无</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>生冷饮品</label><select id="bfColdDrink"><option value="">---</option><option value="有">🧊 有</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>饮酒</label><select id="bfAlcohol"><option value="">---</option><option value="有">🍺 有</option><option value="无">❌ 无</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>运动</label><select id="bfExercise"><option value="">---</option><option value="有氧">🏃 有氧</option><option value="力量">🏋️ 力量</option><option value="瑜伽">🧘 瑜伽</option><option value="散步">🚶 散步</option><option value="无">❌ 无</option></select></div>
+      <div class="form-group"><label>运动时长 (分钟)</label><input type="number" id="bfExerciseMin" min="0" placeholder="如 30"></div>
+      <div class="form-group"><label>排便</label><select id="bfBowel"><option value="">---</option><option value="正常">✅ 正常</option><option value="便秘">😣 便秘</option><option value="腹泻">💨 腹泻</option><option value="无">❌ 无</option></select></div>
+    </div>
     <button class="btn btn-sm" onclick="saveBackfillQuick()" style="margin-top:10px;">💾 保存基本信息</button>
-    <p style="font-size:0.75rem;color:var(--text2);margin-top:8px;">💡 提示：保存后在「今日记录」tab 切换日期可详细编辑情绪和复盘。</p>
   </div>
-  
+
   <div class="card" style="border-left:3px solid var(--yellow);">
     <h2>🌅 上午情绪</h2>
     <div class="mood-entries" id="bfMoodMorning"></div>
     <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('morning')" style="margin-top:6px;">+ 添加一条</button>
-    <button class="btn btn-sm" onclick="saveBackfillMoods()" style="margin-top:6px;">💾 保存情绪</button>
   </div>
   <div class="card" style="border-left:3px solid var(--orange);">
     <h2>☀️ 中午情绪</h2>
@@ -395,8 +411,31 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <div class="mood-entries" id="bfMoodEvening"></div>
     <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('evening')" style="margin-top:6px;">+ 添加一条</button>
   </div>
+
+  <div class="card" style="border-left:3px solid var(--red);margin-top:8px;">
+    <h2>🔍 每日复盘</h2>
+    <div class="review-item"><div class="q">1. 今日最强烈的情绪是什么？是什么触发了它？</div><textarea id="bfQ1" placeholder="写下你的感受..."></textarea></div>
+    <div class="review-item"><div class="q">2. 这个情绪背后，我真正的需求或想法是什么？</div><textarea id="bfQ2" placeholder="深入思考..."></textarea></div>
+    <div class="review-item"><div class="q">3. 今天我如何回应了自己的情绪？（做了什么 / 没做什么）</div><textarea id="bfQ3" placeholder="回顾你的应对方式..."></textarea></div>
+    <div class="review-item"><div class="q">4. 如果可以重来，我会用不同的方式处理吗？</div><textarea id="bfQ4" placeholder="反思与成长..."></textarea></div>
+    <div class="review-item"><div class="q">📝 其他想对自己说的话</div><textarea id="bfExtra" placeholder="自由书写..."></textarea></div>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--yellow);margin-top:8px;">
+    <h2>✨ 每日小确幸</h2>
+    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">今天让你感到温暖或开心的几件小事：</p>
+    <ul class="joy-list" id="bfJoyList">
+      <li class="joy-item"><span class="emoji">🌟</span><textarea id="bfJoy1" placeholder="如：早上喝到了特别好喝的咖啡..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🌸</span><textarea id="bfJoy2" placeholder="如：路上看到一只可爱的小猫..."></textarea></li>
+      <li class="joy-item"><span class="emoji">💝</span><textarea id="bfJoy3" placeholder="如：同事帮我带了午饭..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🍀</span><textarea id="bfJoy4" placeholder="随意记录..."></textarea></li>
+      <li class="joy-item"><span class="emoji">🎵</span><textarea id="bfJoy5" placeholder="随意记录..."></textarea></li>
+    </ul>
+    <button class="btn btn-sm btn-secondary" onclick="bfAddJoy()" style="margin-top:8px;">+ 添加一条</button>
+  </div>
   <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveBackfillAll()">💾 保存全部补记</button></div>
 </div>
+
 
 <!-- ============ TAB 2: 本周趋势 ============ -->
 <div class="tab-content" id="tab-trends">
@@ -1064,6 +1103,12 @@ function setCloudMsg(msg,color){const el=document.getElementById('cloudMsg');if(
 
 // ==================== BACKFILL ====================
 let backfillDate = new Date().toISOString().slice(0,10);
+var bfSex=false,bfDiy=false,bfToys=false;
+function bfToggleSex(v){bfSex=v;document.getElementById('bfSexYes').classList.toggle('active',v);document.getElementById('bfSexNo').classList.toggle('active',!v);document.querySelectorAll('.bf-sex-opt').forEach(function(e){e.style.display=v?'block':'none';});document.querySelectorAll('.bf-no-sex').forEach(function(e){e.style.display=v?'none':'block';});if(!v){bfToggleDiy(bfDiy);}else{document.querySelectorAll('.bf-diy-opt').forEach(function(e){e.style.display='none';});}}
+function bfToggleDiy(v){bfDiy=v;document.getElementById('bfDiyYes').classList.toggle('active',v);document.getElementById('bfDiyNo').classList.toggle('active',!v);document.querySelectorAll('.bf-diy-opt').forEach(function(e){e.style.display=v?'block':'none';});if(!v)bfToggleToys(false);}
+function bfToggleToys(v){bfToys=v;document.getElementById('bfToysYes').classList.toggle('active',v);document.getElementById('bfToysNo').classList.toggle('active',!v);}
+function bfAddJoy(){var list=document.getElementById('bfJoyList');var i=list.children.length;var em=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚','🌻','🍰'];var li=document.createElement('li');li.className='joy-item';li.innerHTML='<span class="emoji">'+em[i%em.length]+'</span><textarea id="bfJoy'+i+'" placeholder="记录一件温暖小事..."></textarea>';list.appendChild(li);}
+
 function loadBackfillDate(){
   backfillDate = document.getElementById('backfillDate').value;
   if(!backfillDate) return;
@@ -1075,7 +1120,31 @@ function initBackfillForm(){
   setRadio('bfSleepGroup', data.sleep);
   document.getElementById('bfEnergy').value = data.energy||5;
   document.getElementById('bfEnergyVal').textContent = data.energy||5;
-  document.getElementById('bfNote').value = data.backfillNote||'';
+  document.getElementById('bfWeight').value = data.weight||'';
+  document.getElementById('bfBreakfast').value = data.breakfast||'';
+  document.getElementById('bfWater').value = data.water||'';
+  document.getElementById('bfFruit').value = data.fruit||'';
+  document.getElementById('bfCoffee').value = data.coffee||'';
+  document.getElementById('bfColdDrink').value = data.coldDrink||'';
+  document.getElementById('bfAlcohol').value = data.alcohol||'';
+  document.getElementById('bfExercise').value = data.exercise||'';
+  document.getElementById('bfExerciseMin').value = data.exerciseMin||'';
+  document.getElementById('bfBowel').value = data.bowel||'';
+  bfToggleSex(data.sex||false);
+  if(data.sex){document.getElementById('bfSexCount').value=data.sexCount||'';document.getElementById('bfSexMeasure').value=data.sexMeasure||'';}
+  else{bfToggleDiy(data.diy||false);if(data.diy)bfToggleToys(data.toys||false);}
+  // Review
+  var r=data.review||{};
+  document.getElementById('bfQ1').value=r.q1||'';document.getElementById('bfQ2').value=r.q2||'';
+  document.getElementById('bfQ3').value=r.q3||'';document.getElementById('bfQ4').value=r.q4||'';
+  document.getElementById('bfExtra').value=r.extra||'';
+  // Joys
+  var joys=data.joys||[];
+  document.getElementById('bfJoyList').innerHTML='';
+  var em=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚','🌻','🍰'];
+  var items=joys.length>0?joys:[''];
+  items.forEach(function(j,i){var li=document.createElement('li');li.className='joy-item';li.innerHTML='<span class="emoji">'+em[i%em.length]+'</span><textarea id="bfJoy'+i+'" placeholder="记录一件温暖小事...">'+(j||'')+'</textarea>';document.getElementById('bfJoyList').appendChild(li);});
+  // Mood
   ['morning','noon','afternoon','evening'].forEach(function(s){
     var entries = Array.isArray(data[s]) ? data[s] : [];
     if(entries.length===0) entries = [{event:'',moodItems:[],bodySense:'',regulation:''}];
@@ -1090,14 +1159,14 @@ function fillBfMood(section, entries){
   entries.forEach(function(e,i){
     var sid='bf_'+section+i;
     var selected = (e.moodItems||[]).map(function(m){return m.mood;});
-    html += '<div class="mood-block '+section+'" style="margin-bottom:12px;">';
-    html += '<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.75rem;color:var(--text2);">#'+(i+1)+'</span></div>';
-    html += '<div class="form-group"><label>事件简述</label><textarea id="'+sid+'_event" placeholder="发生了什么？">'+(e.event||'')+'</textarea></div>';
-    html += '<div class="form-group"><label>情绪（可多选）</label><div class="chip-row" id="'+sid+'_chips">';
-    MOODS.forEach(function(c){ html += '<span class="chip'+(selected.indexOf(c)>=0?' selected':'')+'">'+c+'</span>'; });
-    html += '</div></div>';
-    html += '<div class="form-group"><label>情绪强度 (1-10)</label><div class="slider-row"><input type="range" id="'+sid+'_intensity" min="1" max="10" value="'+(e.intensity||5)+'" oninput="document.getElementById(''+sid+'_intVal').textContent=this.value"><span class="val" id="'+sid+'_intVal">'+(e.intensity||5)+'</span></div></div>';
-    html += '</div>';
+    html += "<div class=\"mood-block "+section+"\" style=\"margin-bottom:12px;\">";
+    html += "<div style=\"display:flex;justify-content:space-between;margin-bottom:6px;\"><span style=\"font-size:0.75rem;color:var(--text2);\">#"+(i+1)+"</span></div>";
+    html += "<div class=\"form-group\"><label>事件简述</label><textarea id=\""+sid+"_event\" placeholder=\"发生了什么？\">"+(e.event||'')+"</textarea></div>";
+    html += "<div class=\"form-group\"><label>情绪（可多选）</label><div class=\"chip-row\" id=\""+sid+"_chips\">";
+    MOODS.forEach(function(c){ html += "<span class=\"chip"+(selected.indexOf(c)>=0?' selected':'')+"\">"+c+"</span>"; });
+    html += "</div></div>";
+    html += "<div class=\"form-group\"><label>情绪强度 (1-10)</label><div class=\"slider-row\"><input type=\"range\" id=\""+sid+"_intensity\" min=\"1\" max=\"10\" value=\""+(e.intensity||5)+"\" oninput=\"document.getElementById('"+sid+"_intVal').textContent=this.value\"><span class=\"val\" id=\""+sid+"_intVal\">"+(e.intensity||5)+"</span></div></div>";
+    html += "</div>";
   });
   container.innerHTML = html;
 }
@@ -1114,7 +1183,18 @@ function saveBackfillQuick(){
   data.weather = document.getElementById('bfWeather').value;
   data.sleep = getRadio('bfSleepGroup');
   data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
-  data.backfillNote = document.getElementById('bfNote').value;
+  data.weight = document.getElementById('bfWeight').value;
+  data.breakfast = document.getElementById('bfBreakfast').value;
+  data.water = document.getElementById('bfWater').value;
+  data.fruit = document.getElementById('bfFruit').value;
+  data.coffee = document.getElementById('bfCoffee').value;
+  data.coldDrink = document.getElementById('bfColdDrink').value;
+  data.alcohol = document.getElementById('bfAlcohol').value;
+  data.exercise = document.getElementById('bfExercise').value;
+  data.exerciseMin = document.getElementById('bfExerciseMin').value;
+  data.bowel = document.getElementById('bfBowel').value;
+  data.sexCount = bfSex?document.getElementById('bfSexCount').value:'';data.sexMeasure = bfSex?document.getElementById('bfSexMeasure').value:'';
+  data.diy = !bfSex&&bfDiy; data.toys = !bfSex&&bfDiy&&bfToys;
   setDayData(backfillDate, data);
 }
 function saveBackfillMoods(){
@@ -1127,7 +1207,24 @@ function saveBackfillAll(){
   data.weather = document.getElementById('bfWeather').value;
   data.sleep = getRadio('bfSleepGroup');
   data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
-  data.backfillNote = document.getElementById('bfNote').value;
+  data.weight = document.getElementById('bfWeight').value;
+  data.breakfast = document.getElementById('bfBreakfast').value;
+  data.water = document.getElementById('bfWater').value;
+  data.fruit = document.getElementById('bfFruit').value;
+  data.coffee = document.getElementById('bfCoffee').value;
+  data.coldDrink = document.getElementById('bfColdDrink').value;
+  data.alcohol = document.getElementById('bfAlcohol').value;
+  data.exercise = document.getElementById('bfExercise').value;
+  data.exerciseMin = document.getElementById('bfExerciseMin').value;
+  data.bowel = document.getElementById('bfBowel').value;
+  data.sex = bfSex; data.sexCount = bfSex?document.getElementById('bfSexCount').value:''; data.sexMeasure = bfSex?document.getElementById('bfSexMeasure').value:'';
+  data.diy = !bfSex&&bfDiy; data.toys = !bfSex&&bfDiy&&bfToys;
+  // Review
+  data.review = {q1:document.getElementById('bfQ1').value,q2:document.getElementById('bfQ2').value,q3:document.getElementById('bfQ3').value,q4:document.getElementById('bfQ4').value,extra:document.getElementById('bfExtra').value};
+  // Joys
+  var joys=[];
+  for(var j=1;j<=20;j++){var el=document.getElementById('bfJoy'+j);if(el&&el.value.trim())joys.push(el.value.trim());else if(!el)break;}
+  data.joys = joys;
   ['morning','noon','afternoon','evening'].forEach(function(s){ data[s] = collectBfMoodEntries(s); });
   setDayData(backfillDate, data);
 }
