@@ -891,14 +891,30 @@ function refreshOverview(){
     <div class="proj-card"><div class="amount" style="color:var(--blue);">${avgSleep}</div><div class="period">⭐ 平均睡眠</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--orange);">${avgEnergy}</div><div class="period">⚡ 平均精力</div></div>
     <div class="proj-card"><div class="amount" style="font-size:0.75rem;color:var(--purple);">${topMoods||'暂无'}</div><div class="period">🔥 常见情绪</div></div>`;
-  if(dates.length===0){
-    document.getElementById('overviewList').innerHTML='<p style="color:var(--text2);text-align:center;">暂无记录，开始你的第一条情绪记录吧 🐨</p>';
-    return;
-  }
-  document.getElementById('overviewList').innerHTML=dates.map(dk=>{
+  // History list - show last 14 days with missing date indicators
+  const last14=[];
+  for(let i=0;i<14;i++){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().slice(0,10));}
+  
+  document.getElementById('overviewList').innerHTML=last14.map(dk=>{
     const data=all[dk];
     const dateLabel=new Date(dk+'T00:00:00').toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
     const isToday=dk===today;
+    
+    let hasContent=false;
+    ['morning','noon','afternoon','evening'].forEach(s=>{
+      (Array.isArray(data[s])?data[s]:[]).forEach(e=>{
+        if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;
+      });
+    });
+    if(!data||!hasContent){
+      return `<div style="background:var(--card);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:6px;cursor:pointer;opacity:0.7;" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:500;color:var(--text2);">${isToday?'📌 ':''}${dateLabel}</span>
+          <span style="font-size:0.75rem;color:var(--orange);">⚠️ 未记录 - 点击补记</span>
+        </div>
+      </div>`;
+    }
+    
     const moods=[];
     ['morning','noon','afternoon','evening'].forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{(e.moodItems||[]).forEach(mi=>{if(mi.mood)moods.push(mi.mood);});(e.moods||[]).forEach(m=>moods.push(m));});});
     const uniqueMoods=[...new Set(moods)];
@@ -909,8 +925,7 @@ function refreshOverview(){
       <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span><span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''}</span></div>
       ${basicInfo?`<div style="font-size:0.75rem;color:var(--text2);margin-top:4px;">${basicInfo}</div>`:''}
       <div style="font-size:0.72rem;margin-top:4px;display:flex;gap:8px;">${hasReview?'<span style="color:var(--green);">✅ 已复盘</span>':''}${hasJoys?'<span style="color:var(--yellow);">✨ 小确幸('+data.joys.filter(j=>j).length+')</span>':''}</div></div>`;
-  }).join('');
-}
+  }).join('');}
 
 // ==================== CLOUD SYNC ====================
 async function cloudSave(){
