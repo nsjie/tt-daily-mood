@@ -975,12 +975,12 @@ function refreshOverview(){
       <div id="detail_${cardIdx}" style="display:none;margin-top:10px;">${detailHTML}</div>
     </div>`;
   }).join('');
+}
 
-// ==================== CLOUD SYNC ====================
-async 
 function toggleDetail(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==="none"?"block":"none";}
 
-function cloudSave(){
+// ==================== CLOUD SYNC ====================
+async function cloudSave(){
   const all=loadAll();const dates=Object.keys(all);
   if(dates.length===0){setCloudMsg('没有数据可上传','var(--red)');return;}
   setCloudMsg('上传中...','var(--text2)');
