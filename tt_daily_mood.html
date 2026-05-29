@@ -238,8 +238,6 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 
 <nav class="tabs" id="tabs">
   <button class="active" data-tab="checkin">📋 今日记录</button>
-  <button data-tab="review">🔍 每日复盘</button>
-  <button data-tab="joy">✨ 小确幸</button>
   <button data-tab="trends">📊 本周趋势</button>
   <button data-tab="overview">🗂️ 数据总览</button>
 </nav>
@@ -317,11 +315,10 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('evening')" style="margin-top:6px;">+ 添加一条</button>
   </div>
 
-  <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">💾 保存今日记录</button></div>
-</div>
+  <!-- ======== 每日复盘 ======== -->
+<div class="card" style="border-left:3px solid var(--red);margin-top:8px;">
+    <h2>🔍 每日复盘</h2>
 
-<!-- ============ TAB 2: 每日复盘 ============ -->
-<div class="tab-content" id="tab-review">
   <div class="card" style="border-left:3px solid var(--purple);">
     <h2>🔍 每日复盘</h2>
     <div class="review-item"><div class="q">1. 今日最强烈的情绪是什么？是什么触发了它？</div><textarea id="reviewQ1" placeholder="写下你的感受..."></textarea></div>
@@ -331,11 +328,12 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <div class="review-item"><div class="q">📝 其他想对自己说的话</div><textarea id="reviewExtra" placeholder="自由书写..."></textarea></div>
     <button class="btn" onclick="saveReview()" style="margin-top:10px;">💾 保存复盘</button>
   </div>
+    <button class="btn" onclick="saveReview()" style="margin-top:10px;">💾 保存复盘</button>
+  </div>
 </div>
 
 <!-- ============ TAB 3: 小确幸 ============ -->
-<div class="tab-content" id="tab-joy">
-  <div class="card" style="border-left:3px solid var(--yellow);">
+<div class="card" style="border-left:3px solid var(--yellow);">
     <h2>✨ 每日小确幸</h2>
     <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">今天让你感到温暖或开心的几件小事：</p>
     <ul class="joy-list" id="joyList">
@@ -348,9 +346,12 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <button class="btn btn-sm" onclick="addJoyItem()" style="margin-top:8px;">+ 添加一条</button>
     <button class="btn" onclick="saveJoy()" style="margin-top:10px;display:block;width:100%;">💾 保存小确幸</button>
   </div>
+
+
+<div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">💾 保存今日记录</button></div>
 </div>
 
-<!-- ============ TAB 4: 本周趋势 ============ -->
+<!-- ============ TAB 2: 本周趋势 ============ -->
 <div class="tab-content" id="tab-trends">
   <div class="card" style="border-left:3px solid var(--blue);">
     <h2>📊 本周情绪趋势</h2>
@@ -363,7 +364,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   </div>
 </div>
 
-<!-- ============ TAB 5: 数据总览 ============ -->
+<!-- ============ TAB 3: 数据总览 ============ -->
 <div class="tab-content" id="tab-overview">
   <div class="card" style="border-left:3px solid var(--green);">
     <h2>📊 数据总览</h2>
@@ -1030,8 +1031,7 @@ document.addEventListener('keydown',function(e){
     e.preventDefault();
     const activeTab=document.querySelector('.tab-content.active');
     if(activeTab.id==='tab-checkin')saveToday();
-    else if(activeTab.id==='tab-review')saveReview();
-    else if(activeTab.id==='tab-joy')saveJoy();
+    
   }
 });
 
