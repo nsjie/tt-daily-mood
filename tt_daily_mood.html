@@ -288,6 +288,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
       <div class="form-group"><label>运动时长 (分钟)</label><input type="number" id="moodExerciseMin" min="0" placeholder="如 30"></div>
       <div class="form-group"><label>排便</label><select id="moodBowel"><option value="">---</option><option value="正常">✅ 正常</option><option value="便秘">😣 便秘</option><option value="腹泻">💨 腹泻</option><option value="无">❌ 无</option></select></div>
     </div>
+    <button class="btn btn-sm" onclick="saveToday()" style="margin-top:10px;">💾 保存基本信息</button>
   </div>
 
   <!-- ---- 情绪记录（4时段，每条可动态增删） ---- -->
@@ -295,24 +296,28 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <h2>🌅 上午情绪</h2>
     <div class="mood-entries" id="moodMorning"></div>
     <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('morning')" style="margin-top:6px;">+ 添加一条</button>
+    <button class="btn btn-sm" onclick="saveToday()" style="margin-top:6px;">💾 保存上午情绪</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--orange);">
     <h2>☀️ 中午情绪</h2>
     <div class="mood-entries" id="moodNoon"></div>
     <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('noon')" style="margin-top:6px;">+ 添加一条</button>
+    <button class="btn btn-sm" onclick="saveToday()" style="margin-top:6px;">💾 保存中午情绪</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--blue);">
     <h2>🌤️ 下午情绪</h2>
     <div class="mood-entries" id="moodAfternoon"></div>
     <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('afternoon')" style="margin-top:6px;">+ 添加一条</button>
+    <button class="btn btn-sm" onclick="saveToday()" style="margin-top:6px;">💾 保存下午情绪</button>
   </div>
 
   <div class="card" style="border-left:3px solid var(--purple);">
     <h2>🌙 晚上情绪</h2>
     <div class="mood-entries" id="moodEvening"></div>
     <button class="btn btn-sm btn-secondary" onclick="addMoodEntry('evening')" style="margin-top:6px;">+ 添加一条</button>
+    <button class="btn btn-sm" onclick="saveToday()" style="margin-top:6px;">💾 保存晚上情绪</button>
   </div>
 
   <!-- ======== 每日复盘 ======== -->
@@ -332,8 +337,8 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   </div>
 </div>
 
-<!-- ============ TAB 3: 小确幸 ============ -->
-<div class="card" style="border-left:3px solid var(--yellow);">
+<!-- ======== 小确幸 ======== -->
+  <div class="card" style="border-left:3px solid var(--yellow);margin-top:8px;">
     <h2>✨ 每日小确幸</h2>
     <p style="color:var(--text2);font-size:0.85rem;margin-bottom:14px;">今天让你感到温暖或开心的几件小事：</p>
     <ul class="joy-list" id="joyList">
@@ -349,6 +354,48 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 
 
 <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveToday()">💾 保存今日记录</button></div>
+</div>
+
+<!-- ============ TAB 4: 补打卡 ============ -->
+<div class="tab-content" id="tab-backfill">
+  <div class="card" style="border-left:3px solid var(--orange);">
+    <h2>⏪ 补打卡录入</h2>
+    <p style="color:var(--text2);font-size:0.85rem;margin-bottom:12px;">选择要补充记录的日期，填写当天数据。</p>
+    <div class="form-row">
+      <div class="form-group"><label>选择日期</label><input type="date" id="backfillDate" onchange="loadBackfillDate()"></div>
+      <div class="form-group"><label>天气</label><select id="bfWeather"><option value="">---</option><option>☀️ 晴</option><option>⛅ 多云</option><option>☁️ 阴天</option><option>🌦️ 小雨</option><option>🌧️ 中雨</option><option>🌧️ 大雨</option><option>⛈️ 暴风雨</option><option>🌀 台风</option><option>🌨️ 小雪</option><option>❄️ 中雪</option><option>❄️ 大雪</option><option>🌨️ 暴风雪</option><option>🌫️ 雾霾</option><option>💨 大风</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>睡眠质量</label><div class="radio-group" id="bfSleepGroup"><span class="radio-btn" data-v="1">⭐</span><span class="radio-btn" data-v="2">⭐⭐</span><span class="radio-btn" data-v="3">⭐⭐⭐</span><span class="radio-btn" data-v="4">⭐⭐⭐⭐</span><span class="radio-btn" data-v="5">⭐⭐⭐⭐⭐</span></div></div>
+      <div class="form-group"><label>精力水平 (1-10)</label><div class="slider-row"><input type="range" id="bfEnergy" min="1" max="10" value="5"><span class="val" id="bfEnergyVal">5</span></div></div>
+    </div>
+    <div class="form-group"><label>简要备注</label><textarea id="bfNote" placeholder="当天整体感受或备注..." style="min-height:50px;"></textarea></div>
+    <button class="btn btn-sm" onclick="saveBackfillQuick()" style="margin-top:10px;">💾 保存基本信息</button>
+    <p style="font-size:0.75rem;color:var(--text2);margin-top:8px;">💡 提示：保存后在「今日记录」tab 切换日期可详细编辑情绪和复盘。</p>
+  </div>
+  
+  <div class="card" style="border-left:3px solid var(--yellow);">
+    <h2>🌅 上午情绪</h2>
+    <div class="mood-entries" id="bfMoodMorning"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('morning')" style="margin-top:6px;">+ 添加一条</button>
+    <button class="btn btn-sm" onclick="saveBackfillMoods()" style="margin-top:6px;">💾 保存情绪</button>
+  </div>
+  <div class="card" style="border-left:3px solid var(--orange);">
+    <h2>☀️ 中午情绪</h2>
+    <div class="mood-entries" id="bfMoodNoon"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('noon')" style="margin-top:6px;">+ 添加一条</button>
+  </div>
+  <div class="card" style="border-left:3px solid var(--blue);">
+    <h2>🌤️ 下午情绪</h2>
+    <div class="mood-entries" id="bfMoodAfternoon"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('afternoon')" style="margin-top:6px;">+ 添加一条</button>
+  </div>
+  <div class="card" style="border-left:3px solid var(--purple);">
+    <h2>🌙 晚上情绪</h2>
+    <div class="mood-entries" id="bfMoodEvening"></div>
+    <button class="btn btn-sm btn-secondary" onclick="addBfMoodEntry('evening')" style="margin-top:6px;">+ 添加一条</button>
+  </div>
+  <div style="text-align:center;padding:10px 0 30px;"><button class="btn" style="font-size:1rem;padding:14px 48px;" onclick="saveBackfillAll()">💾 保存全部补记</button></div>
 </div>
 
 <!-- ============ TAB 2: 本周趋势 ============ -->
@@ -825,6 +872,9 @@ function refreshTrends(){
 document.getElementById('moodEnergy').addEventListener('input',function(){
   document.getElementById('energyVal').textContent=this.value;
 });
+document.getElementById('bfEnergy').addEventListener('input',function(){
+  document.getElementById('bfEnergyVal').textContent=this.value;
+});
 
 // ==================== CHIP CLICKS (event delegation + intensity refresh) ====================
 document.addEventListener('click',function(e){
@@ -856,7 +906,7 @@ document.getElementById('tabs').addEventListener('click',function(e){
     const tabId=e.target.dataset.tab;
     document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
     document.getElementById('tab-'+tabId).classList.add('active');
-    if(tabId==='trends'||tabId==='overview'){ refreshTrends(); refreshOverview(); }
+    if(tabId==='trends'||tabId==='overview'||tabId==='backfill'){ refreshTrends(); refreshOverview(); if(tabId==='backfill'){ document.getElementById('backfillDate').value=currentDate; initBackfillForm(); }}
   }
 });
 
@@ -957,7 +1007,7 @@ function refreshOverview(){
 
     const info=[data.weather,data.sleep?'⭐'+data.sleep:'',data.energy?'⚡'+data.energy:'',data.weight?data.weight+'kg':'',
       data.breakfast?data.breakfast:'',data.water?'💧'+data.water+'杯':'',data.coffee==='有'?'☕':'',data.alcohol==='有'?'🍺':'',
-      data.exercise?data.exercise+'('+data.exerciseMin+'min)':'',data.bowel?data.bowel:''].filter(Boolean);
+      data.exercise?data.exercise+'('+data.exerciseMin+'min)':'',data.bowel?data.bowel:'',data.sex?'❤️爱爱'+data.sexCount+'次'+data.sexMeasure:'',data.diy?'🔹DIY':''].filter(Boolean);
     if(info.length){
       detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.75rem;color:var(--text2);">📌 ${info.join(' · ')}</div>`;
     }
@@ -1011,6 +1061,95 @@ async function cloudLoad(){
 function setCloudMsg(msg,color){const el=document.getElementById('cloudMsg');if(el){el.textContent=msg;el.style.color=color;}}
 
 // ==================== EXPORT/IMPORT ====================
+
+// ==================== BACKFILL ====================
+let backfillDate = new Date().toISOString().slice(0,10);
+function loadBackfillDate(){
+  backfillDate = document.getElementById('backfillDate').value;
+  if(!backfillDate) return;
+  initBackfillForm();
+}
+function initBackfillForm(){
+  var data = getDayData(backfillDate);
+  document.getElementById('bfWeather').value = data.weather||'';
+  setRadio('bfSleepGroup', data.sleep);
+  document.getElementById('bfEnergy').value = data.energy||5;
+  document.getElementById('bfEnergyVal').textContent = data.energy||5;
+  document.getElementById('bfNote').value = data.backfillNote||'';
+  ['morning','noon','afternoon','evening'].forEach(function(s){
+    var entries = Array.isArray(data[s]) ? data[s] : [];
+    if(entries.length===0) entries = [{event:'',moodItems:[],bodySense:'',regulation:''}];
+    fillBfMood(s, entries);
+  });
+}
+function fillBfMood(section, entries){
+  var container = document.getElementById('bfMood'+section.charAt(0).toUpperCase()+section.slice(1));
+  if(!container) return;
+  var MOODS = ['😊 开心','😌 平静','😰 焦虑','😤 烦躁','😴 疲惫','😢 难过','😡 愤怒','🤩 兴奋','😞 低落','😐 无聊','🤔 困惑','🙏 感恩','💬 其他'];
+  var html = '';
+  entries.forEach(function(e,i){
+    var sid='bf_'+section+i;
+    var selected = (e.moodItems||[]).map(function(m){return m.mood;});
+    html += '<div class="mood-block '+section+'" style="margin-bottom:12px;">';
+    html += '<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.75rem;color:var(--text2);">#'+(i+1)+'</span></div>';
+    html += '<div class="form-group"><label>事件简述</label><textarea id="'+sid+'_event" placeholder="发生了什么？">'+(e.event||'')+'</textarea></div>';
+    html += '<div class="form-group"><label>情绪（可多选）</label><div class="chip-row" id="'+sid+'_chips">';
+    MOODS.forEach(function(c){ html += '<span class="chip'+(selected.indexOf(c)>=0?' selected':'')+'">'+c+'</span>'; });
+    html += '</div></div>';
+    html += '<div class="form-group"><label>情绪强度 (1-10)</label><div class="slider-row"><input type="range" id="'+sid+'_intensity" min="1" max="10" value="'+(e.intensity||5)+'" oninput="document.getElementById(''+sid+'_intVal').textContent=this.value"><span class="val" id="'+sid+'_intVal">'+(e.intensity||5)+'</span></div></div>';
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+function addBfMoodEntry(section){
+  var data = getDayData(backfillDate);
+  var entries = Array.isArray(data[section]) ? data[section] : [];
+  entries.push({event:'',moodItems:[],bodySense:'',regulation:''});
+  data[section] = entries;
+  setDayData(backfillDate, data);
+  fillBfMood(section, entries);
+}
+function saveBackfillQuick(){
+  var data = getDayData(backfillDate);
+  data.weather = document.getElementById('bfWeather').value;
+  data.sleep = getRadio('bfSleepGroup');
+  data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
+  data.backfillNote = document.getElementById('bfNote').value;
+  setDayData(backfillDate, data);
+}
+function saveBackfillMoods(){
+  var data = getDayData(backfillDate);
+  data.morning = collectBfMoodEntries('morning');
+  setDayData(backfillDate, data);
+}
+function saveBackfillAll(){
+  var data = getDayData(backfillDate);
+  data.weather = document.getElementById('bfWeather').value;
+  data.sleep = getRadio('bfSleepGroup');
+  data.energy = parseInt(document.getElementById('bfEnergy').value)||5;
+  data.backfillNote = document.getElementById('bfNote').value;
+  ['morning','noon','afternoon','evening'].forEach(function(s){ data[s] = collectBfMoodEntries(s); });
+  setDayData(backfillDate, data);
+}
+function collectBfMoodEntries(section){
+  var entries=[];
+  var container=document.getElementById('bfMood'+section.charAt(0).toUpperCase()+section.slice(1));
+  if(!container)return[];
+  for(var i=0;;i++){
+    var sid='bf_'+section+i;
+    var evEl=document.getElementById(sid+'_event');
+    if(!evEl)break;
+    var moodItems=[];
+    var chipRow=document.getElementById(sid+'_chips');
+    if(chipRow)chipRow.querySelectorAll('.chip.selected').forEach(function(c){ moodItems.push({mood:c.textContent.trim(),intensity:5}); });
+    var intEl=document.getElementById(sid+'_intensity');
+    var intensity=intEl?parseInt(intEl.value)||5:5;
+    moodItems.forEach(function(m){ m.intensity = intensity; });
+    entries.push({event:evEl.value, moodItems:moodItems, bodySense:'', regulation:''});
+  }
+  return entries.length?entries:[{event:'',moodItems:[],bodySense:'',regulation:''}];
+}
+
 function exportData(){
   const all=loadAll();
   const blob=new Blob([JSON.stringify(all,null,2)],{type:'application/json'});
