@@ -16,48 +16,49 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <style>
 :root {
-  --bg:#1e1528; --card:#2a1f36; --card2:#332840; --border:#3d2f4a;
-  --text:#f0e6f6; --text2:#a898b8;
-  --green:#a3e8b5; --green-bg:#a3e8b520;
-  --blue:#a3c8f0; --blue-bg:#a3c8f020;
-  --orange:#ffc4a3; --orange-bg:#ffc4a320;
-  --red:#ff8a9e; --red-bg:#ff8a9e20;
-  --purple:#c9a3f5; --purple-bg:#c9a3f520;
-  --pink:#ff8fab; --pink-bg:#ff8fab20;
-  --yellow:#ffe4a0; --yellow-bg:#ffe4a020;
-  --rose:#ffb3c6; --rose-bg:#ffb3c620;
-  --radius:18px; --radius-sm:10px;
-  --shadow:0 2px 16px rgba(200,150,220,0.08);
+  --bg:#0a0a0f; --card:#12121a; --card2:#1a1a25; --border:#252535;
+  --text:#d0d0d8; --text2:#707080;
+  --green:#2ecc71; --green-bg:#2ecc7120;
+  --blue:#4a90d9; --blue-bg:#4a90d920;
+  --orange:#e67e22; --orange-bg:#e67e2220;
+  --red:#e74c3c; --red-bg:#e74c3c20;
+  --purple:#8e44ad; --purple-bg:#8e44ad20;
+  --pink:#c0392b; --pink-bg:#c0392b20;
+  --yellow:#f39c12; --yellow-bg:#f39c1220;
+  --steel:#7f8c8d; --steel-bg:#7f8c8d20;
+  --dragon:#e74c3c; --dragon-bg:#e74c3c15;
+  --radius:14px; --radius-sm:8px;
+  --shadow:0 2px 16px rgba(200,0,0,0.06);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
   background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6;
   background-image:
-    radial-gradient(ellipse at 20% 10%, rgba(255,143,171,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(201,163,245,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(255,228,160,0.03) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 10%, rgba(231,76,60,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(74,144,217,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(243,156,18,0.02) 0%, transparent 50%);
 }
 
-/* cute corner decorations */
-body::before{content:'🍓 🐨 🍊 ♒ 🐦‍🔥 🐉';position:fixed;top:4px;right:12px;
-  font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
-body::after{content:'🍊 🐉 🍓 ♒ 🐦‍🔥 🐨';position:fixed;bottom:4px;left:12px;
-  font-size:10px;opacity:0.25;pointer-events:none;z-index:0;letter-spacing:4px;}
+/* corner decorations */
+body::before{content:'🐔 🦂 💀 ⚔️';position:fixed;top:4px;right:12px;
+  font-size:11px;opacity:0.2;pointer-events:none;z-index:0;letter-spacing:4px;}
+body::after{content:'🔥 ⚔️ 🦂 🐔';position:fixed;bottom:4px;left:12px;
+  font-size:11px;opacity:0.2;pointer-events:none;z-index:0;letter-spacing:4px;}
 
 header{
-  background:linear-gradient(135deg,#2d1830 0%,#1e2a20 50%,#2a1830 100%);
+  background:linear-gradient(135deg,#0d0d15 0%,#14141e 50%,#0d0d15 100%);
   border-bottom:1px solid var(--border); padding:14px 20px;
   display:flex; align-items:center; justify-content:space-between;
   position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 20px rgba(200,150,220,0.06);
+  box-shadow:0 2px 20px rgba(200,0,0,0.05);
 }
-header h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+header h1{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:6px;color:#e0d8d0;}
 header .subtitle{font-size:0.72rem;color:var(--text2);}
 
-/* cute header floating emojis */
-header::after{content:'🍓🍊🐨';position:absolute;right:50px;top:6px;
-  font-size:14px;opacity:0.5;pointer-events:none;animation:float 3s ease-in-out infinite;}
+/* floating header emoji */
+header::after{content:'🐔';position:absolute;right:50px;top:6px;
+  font-size:14px;opacity:0.4;pointer-events:none;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 nav.tabs{display:flex;gap:2px;padding:0 16px;background:var(--card);
@@ -66,8 +67,8 @@ nav.tabs{display:flex;gap:2px;padding:0 16px;background:var(--card);
 nav.tabs button{background:none;border:none;color:var(--text2);
   padding:12px 14px;cursor:pointer;font-size:0.82rem;
   border-bottom:3px solid transparent;transition:0.25s;white-space:nowrap;flex-shrink:0;}
-nav.tabs button:hover{color:var(--pink);}
-nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
+nav.tabs button:hover{color:var(--dragon);}
+nav.tabs button.active{color:var(--dragon);border-bottom-color:var(--dragon);}
 
 .tab-content{display:none;padding:16px;max-width:900px;margin:0 auto;position:relative;}
 .tab-content.active{display:block;}
@@ -77,144 +78,142 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   border-radius:var(--radius); padding:20px; margin-bottom:16px;
   box-shadow:var(--shadow); transition:0.2s;
 }
-.card:hover{box-shadow:0 4px 24px rgba(200,150,220,0.12);}
+.card:hover{box-shadow:0 4px 24px rgba(200,0,0,0.08);}
 .card h2{font-size:1.05rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .card h3{font-size:0.9rem;margin-bottom:10px;color:var(--text2);}
 
 .form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
 .form-group{flex:1;min-width:120px;}
-.form-group label{display:block;font-size:0.78rem;color:var(--text2);margin-bottom:5px;font-weight:500;}
+.form-group label{display:block;font-size:0.78rem;color:var(--text2);margin-bottom:5px;font-weight:500;letter-spacing:0.5px;}
 .form-group input,.form-group select,.form-group textarea{
   width:100%; background:var(--card2); border:1px solid var(--border);
   color:var(--text); padding:9px 12px; border-radius:var(--radius-sm);
   font-size:0.9rem; outline:none; transition:0.2s;
 }
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-bg);}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-bg);}
 .form-group textarea{resize:vertical;min-height:50px;}
-.form-group input[type=range]{padding:0;accent-color:var(--pink);height:6px;}
+.form-group input[type=range]{padding:0;accent-color:var(--dragon);height:6px;}
 
 .slider-row{display:flex;align-items:center;gap:10px;}
 .slider-row input[type=range]{flex:1;}
-.slider-row .val{font-size:1rem;font-weight:700;min-width:24px;text-align:center;color:var(--pink);}
+.slider-row .val{font-size:1rem;font-weight:700;min-width:24px;text-align:center;color:var(--dragon);}
 
 .chip-row{display:flex;flex-wrap:wrap;gap:6px;}
 .chip{
-  padding:6px 13px; border-radius:20px; font-size:0.78rem;
-  border:1.5px solid var(--border); cursor:pointer; transition:0.2s;
+  padding:6px 13px; border-radius:4px; font-size:0.78rem;
+  border:1px solid var(--border); cursor:pointer; transition:0.2s;
   user-select:none; -webkit-tap-highlight-color:transparent;
   background:var(--card2); color:var(--text2);
 }
-.chip:hover{border-color:var(--pink);color:var(--pink);}
+.chip:hover{border-color:var(--dragon);color:var(--dragon);}
 .chip.selected{
-  border-color:var(--pink); color:#fff;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  box-shadow:0 2px 8px rgba(255,143,171,0.2);
+  border-color:var(--dragon); color:#fff;
+  background:linear-gradient(135deg,var(--dragon),#c0392b);
+  box-shadow:0 2px 8px rgba(231,76,60,0.25);
 }
 
 .btn{
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:#fff; border:none; padding:10px 24px; border-radius:24px;
+  background:linear-gradient(135deg,var(--dragon),#c0392b);
+  color:#fff; border:none; padding:10px 24px; border-radius:4px;
   font-size:0.9rem; font-weight:600; cursor:pointer; transition:0.25s;
-  box-shadow:0 4px 14px rgba(255,143,171,0.2);
+  box-shadow:0 4px 14px rgba(231,76,60,0.2); letter-spacing:0.5px;
 }
-.btn:hover{opacity:0.88;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,143,171,0.3);}
-.btn:active{transform:translateY(0);}
-.btn-sm{padding:7px 16px;font-size:0.8rem;border-radius:20px;}
+.btn:hover{opacity:0.88;box-shadow:0 6px 20px rgba(231,76,60,0.35);}
+.btn-sm{padding:7px 16px;font-size:0.8rem;border-radius:4px;}
 .btn-secondary{background:var(--card2);color:var(--text);border:1px solid var(--border);box-shadow:none;}
 .btn-secondary:hover{background:var(--border);}
-.btn-danger{background:linear-gradient(135deg,var(--red),#ff6b81);color:#fff;box-shadow:0 4px 14px rgba(255,138,158,0.2);}
+.btn-danger{background:linear-gradient(135deg,#2c3e50,#34495e);color:#e74c3c;box-shadow:none;}
 
-/* Toggle buttons cute */
+/* Toggles */
 .toggle-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .toggle-btn{
   background:var(--card2); color:var(--text2); border:1px solid var(--border);
-  padding:7px 18px; border-radius:20px; font-size:0.8rem; cursor:pointer; transition:0.25s;
+  padding:7px 18px; border-radius:4px; font-size:0.8rem; cursor:pointer; transition:0.25s;
 }
-.toggle-btn:hover{border-color:var(--pink);color:var(--pink);}
+.toggle-btn:hover{border-color:var(--blue);color:var(--blue);}
 .toggle-btn.active{
-  background:linear-gradient(135deg,var(--pink),var(--rose));
-  color:#fff; border-color:transparent;
+  background:linear-gradient(135deg,#2c3e50,#34495e);
+  color:var(--blue); border-color:var(--blue);
 }
 
-/* Radio group cute */
+/* Radio group */
 .radio-group{display:flex;gap:6px;flex-wrap:wrap;}
 .radio-group .radio-btn{
   background:var(--card2); border:1px solid var(--border); color:var(--text2);
-  padding:6px 15px; border-radius:20px; font-size:0.78rem; cursor:pointer; transition:0.25s;
+  padding:6px 15px; border-radius:4px; font-size:0.78rem; cursor:pointer; transition:0.25s;
 }
-.radio-group .radio-btn:hover{border-color:var(--purple);color:var(--purple);}
+.radio-group .radio-btn:hover{border-color:var(--blue);color:var(--blue);}
 .radio-group .radio-btn.selected{
-  border-color:var(--purple); color:#fff;
-  background:linear-gradient(135deg,#c9a3f5,#d4a8ff);
+  border-color:var(--blue); color:#fff;
+  background:linear-gradient(135deg,#2c3e50,#3498db);
 }
 
 /* Mood blocks */
 .mood-block{
-  border-left:4px solid var(--pink); padding:12px 16px; margin-bottom:12px;
-  border-radius:0 var(--radius-sm) var(--radius-sm) 0; background:var(--card2);
-  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  border-left:4px solid var(--dragon); padding:12px 16px; margin-bottom:12px;
+  border-radius:0 4px 4px 0; background:var(--card2);
+  box-shadow:0 2px 10px rgba(0,0,0,0.2);
 }
 .mood-block.morning{border-color:var(--yellow);}
 .mood-block.noon{border-color:var(--orange);}
 .mood-block.afternoon{border-color:var(--blue);}
 .mood-block.evening{border-color:var(--purple);}
 
-/* Mood intensity rows */
 .mood-intensity-row{
   display:flex; align-items:center; gap:8px; margin-bottom:6px;
-  background:var(--card); border-radius:10px; padding:6px 10px;
+  background:var(--card); border-radius:4px; padding:6px 10px;
 }
 
-/* Review items cute */
+/* Review */
 .review-item{
   background:var(--card2); border:1px solid var(--border); border-radius:var(--radius-sm);
   padding:16px; margin-bottom:10px; transition:0.2s;
 }
-.review-item:hover{border-color:var(--purple);}
-.review-item .q{font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--pink);}
+.review-item:hover{border-color:var(--blue);}
+.review-item .q{font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--blue);}
 .review-item textarea{
   width:100%; background:var(--card); border:1px solid var(--border);
-  color:var(--text); padding:10px; border-radius:8px; font-size:0.85rem;
+  color:var(--text); padding:10px; border-radius:4px; font-size:0.85rem;
   outline:none; min-height:60px; resize:vertical;
 }
-.review-item textarea:focus{border-color:var(--pink);}
+.review-item textarea:focus{border-color:var(--blue);}
 
-/* Joy items cute */
+/* Joy items */
 .joy-list{list-style:none;}
 .joy-item{
   display:flex; align-items:flex-start; gap:12px; padding:12px 0;
-  border-bottom:1px dashed var(--border);
+  border-bottom:1px solid var(--border);
 }
 .joy-item:last-child{border-bottom:none;}
-.joy-item .emoji{font-size:1.5rem;filter:drop-shadow(0 2px 4px rgba(200,150,220,0.3));}
+.joy-item .emoji{font-size:1.5rem;opacity:0.7;}
 .joy-item textarea{
   flex:1; background:var(--card2); border:1px solid var(--border);
-  color:var(--text); padding:8px 12px; border-radius:10px; font-size:0.85rem;
+  color:var(--text); padding:8px 12px; border-radius:4px; font-size:0.85rem;
   outline:none; min-height:36px; resize:none; transition:0.2s;
 }
-.joy-item textarea:focus{border-color:var(--yellow);box-shadow:0 0 0 3px var(--yellow-bg);}
+.joy-item textarea:focus{border-color:var(--yellow);}
 
 /* Trend table */
 .trend-table{width:100%;border-collapse:collapse;font-size:0.82rem;}
-.trend-table th{text-align:left;padding:10px 12px;color:var(--pink);border-bottom:2px solid var(--border);font-weight:600;font-size:0.75rem;}
+.trend-table th{text-align:left;padding:10px 12px;color:var(--blue);border-bottom:2px solid var(--border);font-weight:600;font-size:0.75rem;}
 .trend-table td{padding:10px 12px;border-bottom:1px solid var(--border);}
 .trend-high{color:var(--green);font-weight:600;}
 .trend-mid{color:var(--orange);font-weight:600;}
 .trend-low{color:var(--red);font-weight:600;}
 
-.proj-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+/* Overview stats */
+.proj-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
 .proj-card .amount{font-size:1.5rem;font-weight:700;}
 .proj-card .period{font-size:0.75rem;color:var(--text2);margin-top:4px;}
 
 .tip-box{
-  background:linear-gradient(135deg,var(--rose-bg),var(--purple-bg));
-  border:1px solid var(--pink); border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--blue-bg),var(--purple-bg));
+  border:1px solid var(--border); border-radius:var(--radius);
   padding:18px 22px; margin-bottom:16px;
 }
 .tip-box .tip{font-size:0.85rem;color:var(--text);margin-bottom:6px;padding-left:16px;position:relative;}
-.tip-box .tip::before{content:'💡';position:absolute;left:-4px;top:0;}
+.tip-box .tip::before{content:'💀';position:absolute;left:-4px;top:0;}
 
-/* Responsive */
 @media(max-width:640px){
   header{padding:10px 14px;}
   header h1{font-size:1rem;}
@@ -224,7 +223,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   .card{padding:16px;}
   .form-row{flex-direction:column;gap:8px;}
   .form-group{min-width:100%;}
-  .btn{padding:12px 22px;}
+  .btn{padding:12px 22px;border-radius:4px;}
   header::after{display:none;}
 }
 </style>
@@ -238,6 +237,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 
 <nav class="tabs" id="tabs">
   <button class="active" data-tab="checkin">📋 今日记录</button>
+  <button data-tab="backfill">⏪ 补打卡</button>
   <button data-tab="trends">📊 本周趋势</button>
   <button data-tab="overview">🗂️ 数据总览</button>
 </nav>
@@ -259,11 +259,12 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
       <div class="form-group"><label>睡眠质量</label><div class="radio-group" id="sleepGroup"><span class="radio-btn" data-v="1">⭐</span><span class="radio-btn" data-v="2">⭐⭐</span><span class="radio-btn" data-v="3">⭐⭐⭐</span><span class="radio-btn" data-v="4">⭐⭐⭐⭐</span><span class="radio-btn" data-v="5">⭐⭐⭐⭐⭐</span></div></div>
       <div class="form-group"><label>精力水平 (1-10)</label><div class="slider-row"><input type="range" id="moodEnergy" min="1" max="10" value="5"><span class="val" id="energyVal">5</span></div></div>
     </div>
+
     <div class="form-row">
       <div class="form-group"><label>是否为生理期</label><div class="toggle-row"><button class="toggle-btn" id="periodYes" onclick="togglePeriod(true)">是</button><button class="toggle-btn active" id="periodNo" onclick="togglePeriod(false)">否</button></div></div>
       <div class="form-group period-opt" id="periodFlowGroup" style="display:none;"><label>生理期量</label><div class="radio-group" id="flowGroup"><span class="radio-btn" data-v="少">少</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="多">多</span></div></div>
       <div class="form-group period-opt" style="display:none;"><label>痛经程度</label><div class="radio-group" id="painGroup"><span class="radio-btn" data-v="无">无</span><span class="radio-btn" data-v="轻">轻</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="重">重</span></div></div>
-<div class="form-group no-period-opt"><label>白带是否正常</label><select id="moodDischarge"><option value="">---</option><option value="正常">✅ 正常</option><option value="异常">⚠️ 异常</option></select></div>
+      <div class="form-group no-period-opt"><label>白带是否正常</label><select id="moodDischarge"><option value="">---</option><option value="正常">✅ 正常</option><option value="异常">⚠️ 异常</option></select></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>是否爱爱</label><div class="toggle-row"><button class="toggle-btn" id="sexYes" onclick="toggleSex(true)">是</button><button class="toggle-btn active" id="sexNo" onclick="toggleSex(false)">否</button></div></div>
@@ -321,10 +322,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   </div>
 
   <!-- ======== 每日复盘 ======== -->
-<div class="card" style="border-left:3px solid var(--red);margin-top:8px;">
-    <h2>🔍 每日复盘</h2>
-
-  <div class="card" style="border-left:3px solid var(--purple);">
+  <div class="card" style="border-left:3px solid var(--red);margin-top:8px;">
     <h2>🔍 每日复盘</h2>
     <div class="review-item"><div class="q">1. 今日最强烈的情绪是什么？是什么触发了它？</div><textarea id="reviewQ1" placeholder="写下你的感受..."></textarea></div>
     <div class="review-item"><div class="q">2. 这个情绪背后，我真正的需求或想法是什么？</div><textarea id="reviewQ2" placeholder="深入思考..."></textarea></div>
@@ -333,9 +331,6 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <div class="review-item"><div class="q">📝 其他想对自己说的话</div><textarea id="reviewExtra" placeholder="自由书写..."></textarea></div>
     <button class="btn" onclick="saveReview()" style="margin-top:10px;">💾 保存复盘</button>
   </div>
-    <button class="btn" onclick="saveReview()" style="margin-top:10px;">💾 保存复盘</button>
-  </div>
-</div>
 
 <!-- ======== 小确幸 ======== -->
   <div class="card" style="border-left:3px solid var(--yellow);margin-top:8px;">
@@ -364,6 +359,13 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
     <div class="form-row">
       <div class="form-group"><label>睡眠质量</label><div class="radio-group" id="bfSleepGroup"><span class="radio-btn" data-v="1">⭐</span><span class="radio-btn" data-v="2">⭐⭐</span><span class="radio-btn" data-v="3">⭐⭐⭐</span><span class="radio-btn" data-v="4">⭐⭐⭐⭐</span><span class="radio-btn" data-v="5">⭐⭐⭐⭐⭐</span></div></div>
       <div class="form-group"><label>精力水平 (1-10)</label><div class="slider-row"><input type="range" id="bfEnergy" min="1" max="10" value="5"><span class="val" id="bfEnergyVal">5</span></div></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group"><label>是否为生理期</label><div class="toggle-row"><button class="toggle-btn" id="periodYes" onclick="togglePeriod(true)">是</button><button class="toggle-btn active" id="periodNo" onclick="togglePeriod(false)">否</button></div></div>
+      <div class="form-group period-opt" id="periodFlowGroup" style="display:none;"><label>生理期量</label><div class="radio-group" id="flowGroup"><span class="radio-btn" data-v="少">少</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="多">多</span></div></div>
+      <div class="form-group period-opt" style="display:none;"><label>痛经程度</label><div class="radio-group" id="painGroup"><span class="radio-btn" data-v="无">无</span><span class="radio-btn" data-v="轻">轻</span><span class="radio-btn" data-v="中">中</span><span class="radio-btn" data-v="重">重</span></div></div>
+      <div class="form-group no-period-opt"><label>白带是否正常</label><select id="moodDischarge"><option value="">---</option><option value="正常">✅ 正常</option><option value="异常">⚠️ 异常</option></select></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>是否爱爱</label><div class="toggle-row"><button class="toggle-btn" id="bfSexYes" onclick="bfToggleSex(true)">是</button><button class="toggle-btn active" id="bfSexNo" onclick="bfToggleSex(false)">否</button></div></div>
@@ -454,7 +456,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 <div class="tab-content" id="tab-overview">
   <div class="card" style="border-left:3px solid var(--green);">
     <h2>📊 数据总览</h2>
-    <div id="overviewStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;"></div>
+    <div class="stat-grid" id="overviewStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;"></div>
   </div>
   <div class="card" style="border-left:3px solid var(--blue);">
     <h2>📅 历史记录</h2>
@@ -499,8 +501,7 @@ function setDayData(dateKey,dayData){const d=loadAll();d[dateKey]=dayData;saveAl
 
 function createEmptyDay(){
   return{
-    weather:'',sleep:'',energy:5,period:false,periodFlow:'',periodPain:'',
-    sex:false,sexCount:'',sexMeasure:'',diy:false,toys:false,weight:'',discharge:'',breakfast:'',water:'',fruit:'',coffee:'',coldDrink:'',alcohol:'',exercise:'',exerciseMin:'',bowel:'',
+    sex:false,sexCount:'',sexMeasure:'',diy:false,toys:false,weight:'',period:false,periodFlow:'',periodPain:'',discharge:'',breakfast:'',water:'',fruit:'',coffee:'',coldDrink:'',alcohol:'',exercise:'',exerciseMin:'',bowel:'',
     morning:[],
     noon:[],
     afternoon:[],
@@ -954,6 +955,8 @@ function refreshOverview(){
   const all=loadAll();
   const dates=Object.keys(all).sort().reverse();
   const today=new Date().toISOString().slice(0,10);
+
+  // Stats
   let totalDays=0,totalMoods=0,moodSum=0,sleepSum=0,sleepCount=0,energySum=0,energyCount=0;
   let allMoodNames={};
   dates.forEach(dk=>{
@@ -963,7 +966,9 @@ function refreshOverview(){
     sections.forEach(s=>{
       const entries=Array.isArray(data[s])?data[s]:[];
       entries.forEach(e=>{
-        (e.moodItems||[]).forEach(mi=>{if(mi.mood){allMoodNames[mi.mood]=(allMoodNames[mi.mood]||0)+1;moodSum+=mi.intensity||5;totalMoods++;}});
+        (e.moodItems||[]).forEach(mi=>{
+          if(mi.mood){allMoodNames[mi.mood]=(allMoodNames[mi.mood]||0)+1;moodSum+=mi.intensity||5;totalMoods++;}
+        });
         (e.moods||[]).forEach(m=>{allMoodNames[m]=(allMoodNames[m]||0)+1;});
         if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;
       });
@@ -972,6 +977,7 @@ function refreshOverview(){
     if(data.sleep){sleepSum+=parseInt(data.sleep)||0;sleepCount++;}
     if(data.energy){energySum+=parseInt(data.energy)||0;energyCount++;}
   });
+
   let sexDays=0,sexTotal=0;
   dates.forEach(dk=>{const d=all[dk];if(d.sex){sexDays++;sexTotal+=parseInt(d.sexCount)||1;}});
   const avgSex=totalDays?((sexDays/totalDays*100).toFixed(0)+'% ('+sexDays+'天)'):'-';
@@ -980,6 +986,7 @@ function refreshOverview(){
   const avgSleep=sleepCount?(sleepSum/sleepCount).toFixed(1):'-';
   const avgEnergy=energyCount?(energySum/energyCount).toFixed(1):'-';
   const topMoods=Object.entries(allMoodNames).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k}(${v}次)`).join(' ');
+
   document.getElementById('overviewStats').innerHTML=`
     <div class="proj-card"><div class="amount" style="color:var(--green);">${totalDays}</div><div class="period">📅 记录天数</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--pink);">${avgMood}</div><div class="period">😊 平均情绪</div></div>
@@ -987,6 +994,7 @@ function refreshOverview(){
     <div class="proj-card"><div class="amount" style="color:var(--blue);">${avgSleep}</div><div class="period">⭐ 平均睡眠</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--orange);">${avgEnergy}</div><div class="period">⚡ 平均精力</div></div>
     <div class="proj-card"><div class="amount" style="font-size:0.75rem;color:var(--purple);">${topMoods||'暂无'}</div><div class="period">🔥 常见情绪</div></div>`;
+
   // History list - show last 14 days, expandable for full detail
   const last14=[];
   for(let i=0;i<14;i++){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().slice(0,10));}
@@ -1003,7 +1011,7 @@ function refreshOverview(){
     sections.forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;});});
 
     if(!data||!hasContent){
-      return `<div style="background:var(--card);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:6px;cursor:pointer;opacity:0.7;" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
+      return `<div style="background:var(--card);border:1px dashed var(--border);border-radius:10px;padding:10px;margin-bottom:6px;cursor:pointer;opacity:0.7;" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <span style="font-weight:500;color:var(--text2);">${isToday?'📌 ':''}${dateLabel}</span>
           <span style="font-size:0.75rem;color:var(--orange);">⚠️ 未记录 - 点击补记</span>
@@ -1011,6 +1019,7 @@ function refreshOverview(){
       </div>`;
     }
 
+    // Build detailed content
     let detailHTML='';
     sections.forEach(s=>{
       const entries=Array.isArray(data[s])?data[s]:[];
@@ -1022,13 +1031,14 @@ function refreshOverview(){
         detailHTML+=`<div style="border-left:3px solid var(--border);padding:6px 10px;margin:6px 0;font-size:0.8rem;">
           <span style="color:var(--text2);font-size:0.7rem;">${sectionLabels[s]} #${ei+1}</span>
           ${e.event?`<div style="margin:3px 0;">📝 ${e.event}</div>`:''}
-          ${allMoods?`<div style="color:var(--pink);">😊 ${allMoods}</div>`:''}
+          ${allMoods?`<div style="color:var(--purple);">😊 ${allMoods}</div>`:''}
           ${e.bodySense?`<div style="color:var(--blue);">🫁 体感: ${e.bodySense}</div>`:''}
           ${e.regulation?`<div style="color:var(--green);">🛠️ 调节: ${e.regulation}</div>`:''}
         </div>`;
       });
     });
 
+    // Review
     const r=data.review||{};
     if(r.q1||r.q2||r.q3||r.q4){
       detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.78rem;">
@@ -1041,6 +1051,7 @@ function refreshOverview(){
       </div>`;
     }
 
+    // Joys
     const joys=(data.joys||[]).filter(j=>j);
     if(joys.length){
       detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.78rem;">
@@ -1049,6 +1060,7 @@ function refreshOverview(){
       </div>`;
     }
 
+    // Basic info
     const info=[data.weather,data.sleep?'⭐'+data.sleep:'',data.energy?'⚡'+data.energy:'',data.weight?data.weight+'kg':'',
       data.breakfast?data.breakfast:'',data.water?'💧'+data.water+'杯':'',data.coffee==='有'?'☕':'',data.alcohol==='有'?'🍺':'',
       data.exercise?data.exercise+'('+data.exerciseMin+'min)':'',data.bowel?data.bowel:'',data.sex?'❤️爱爱'+data.sexCount+'次'+data.sexMeasure:'',data.diy?'🔹DIY':''].filter(Boolean);
@@ -1056,21 +1068,22 @@ function refreshOverview(){
       detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.75rem;color:var(--text2);">📌 ${info.join(' · ')}</div>`;
     }
 
+    // Edit button
     detailHTML+=`<button class="btn btn-sm btn-secondary" style="margin-top:10px;width:100%;" onclick="event.stopPropagation();loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">✏️ 编辑当天记录</button>`;
 
     const moods=[];
     sections.forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{(e.moodItems||[]).forEach(mi=>{if(mi.mood)moods.push(mi.mood);});(e.moods||[]).forEach(m=>moods.push(m));});});
     const uniqueMoods=[...new Set(moods)];
 
-    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;${isToday?'border-color:var(--pink);':''}">
+    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;${isToday?'border-color:var(--pink);':''}">
       <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" data-card="${cardIdx}">
         <span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span>
         <span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''} ▾</span>
       </div>
       <div style="font-size:0.72rem;color:var(--text2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        ${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}
-        ${data.diy?'<span style="color:var(--purple);">DIY</span>':''}
-        ${data.weather||''} ${data.sleep?'*'+data.sleep:''} ${data.energy?'⚡'+data.energy:''}
+        ${data.sex?'<span style="color:var(--pink);">❤️ 爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}
+        ${data.diy?'<span style="color:var(--purple);">🔹 DIY</span>':''}
+        ${data.weather||''} ${data.sleep?'⭐'+data.sleep:''} ${data.energy?'⚡'+data.energy:''}
         <span style="color:var(--blue);cursor:pointer;margin-left:auto;" data-expand="${cardIdx}" style="color:var(--blue);cursor:pointer;margin-left:auto;">▼ 点击展开/收起</span>
       </div>
       <div style="font-size:0.72rem;color:var(--text2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">${data.sex?'<span style="color:var(--pink);">爱爱'+data.sexCount+'次 '+data.sexMeasure+'</span>':''}${data.diy?'<span style="color:var(--purple);">DIY</span>':''}${data.weather||''}${data.sleep?'星'+data.sleep:''}${data.energy?'⚡'+data.energy:''}<span style="color:var(--blue);cursor:pointer;margin-left:auto;" data-expand="${cardIdx}" style="color:var(--blue);cursor:pointer;margin-left:auto;">▼ 点击展开/收起</span></div>
@@ -1104,7 +1117,8 @@ function toggleDetail(id){const el=document.getElementById(id);if(el)el.style.di
 
 // ==================== CLOUD SYNC ====================
 async function cloudSave(){
-  const all=loadAll();const dates=Object.keys(all);
+  const all=loadAll();
+  const dates=Object.keys(all);
   if(dates.length===0){setCloudMsg('没有数据可上传','var(--red)');return;}
   setCloudMsg('上传中...','var(--text2)');
   try{
@@ -1112,11 +1126,15 @@ async function cloudSave(){
     if(!tokenVal){const t=prompt('请输入 GitHub Token（仅保存在本地浏览器）：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
     const content=btoa(unescape(encodeURIComponent(JSON.stringify(all))));
     let sha='';
-    try{const check=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});if(check.ok){const j=await check.json();sha=j.sha;}}catch(e){}
+    try{
+      const check=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});
+      if(check.ok){const j=await check.json();sha=j.sha;}
+    }catch(e){}
     const body=JSON.stringify({message:'update mood data',content,sha:sha||undefined,branch:'main'});
     const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{method:'PUT',headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'},body});
-    if(resp.ok){setCloudMsg('✅ 上传成功！('+dates.length+'天记录)','var(--green)');}else{setCloudMsg('❌ 上传失败','var(--red)');}
-  }catch(e){setCloudMsg('❌ 网络错误','var(--red)');}
+    if(resp.ok){setCloudMsg('✅ 上传成功！('+dates.length+'天记录)','var(--green)');}
+    else{setCloudMsg('❌ 上传失败，Token可能无效','var(--red)');}
+  }catch(e){setCloudMsg('❌ 网络错误 '+e.message,'var(--red)');}
 }
 async function cloudLoad(){
   setCloudMsg('下载中...','var(--text2)');
@@ -1124,15 +1142,16 @@ async function cloudLoad(){
     let tokenVal=localStorage.getItem('gh_token');
     if(!tokenVal){const t=prompt('请输入 GitHub Token：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
     const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});
-    if(!resp.ok){setCloudMsg('❌ 云端暂无数据','var(--red)');return;}
-    const j=await resp.json();const data=JSON.parse(decodeURIComponent(escape(atob(j.content))));
-    saveAll(data);setCloudMsg('✅ 加载成功！('+Object.keys(data).length+'天记录)','var(--green)');
+    if(!resp.ok){setCloudMsg('❌ 云端暂无数据或Token无效','var(--red)');return;}
+    const j=await resp.json();
+    const data=JSON.parse(decodeURIComponent(escape(atob(j.content))));
+    saveAll(data);
+    setCloudMsg('✅ 加载成功！('+Object.keys(data).length+'天记录)','var(--green)');
     loadDay();fillForm();refreshOverview();
   }catch(e){setCloudMsg('❌ 加载失败','var(--red)');}
 }
 function setCloudMsg(msg,color){const el=document.getElementById('cloudMsg');if(el){el.textContent=msg;el.style.color=color;}}
 
-// ==================== EXPORT/IMPORT ====================
 
 // ==================== BACKFILL ====================
 let backfillDate = new Date().toISOString().slice(0,10);
@@ -1148,36 +1167,12 @@ function loadBackfillDate(){
   initBackfillForm();
 }
 function initBackfillForm(){
-  var data = getDayData(backfillDate);
+  const data = getDayData(backfillDate);
   document.getElementById('bfWeather').value = data.weather||'';
   setRadio('bfSleepGroup', data.sleep);
   document.getElementById('bfEnergy').value = data.energy||5;
   document.getElementById('bfEnergyVal').textContent = data.energy||5;
-  document.getElementById('bfWeight').value = data.weight||'';
-  document.getElementById('bfBreakfast').value = data.breakfast||'';
-  document.getElementById('bfWater').value = data.water||'';
-  document.getElementById('bfFruit').value = data.fruit||'';
-  document.getElementById('bfCoffee').value = data.coffee||'';
-  document.getElementById('bfColdDrink').value = data.coldDrink||'';
-  document.getElementById('bfAlcohol').value = data.alcohol||'';
-  document.getElementById('bfExercise').value = data.exercise||'';
-  document.getElementById('bfExerciseMin').value = data.exerciseMin||'';
-  document.getElementById('bfBowel').value = data.bowel||'';
-  bfToggleSex(data.sex||false);
-  if(data.sex){document.getElementById('bfSexCount').value=data.sexCount||'';document.getElementById('bfSexMeasure').value=data.sexMeasure||'';}
-  else{bfToggleDiy(data.diy||false);if(data.diy)bfToggleToys(data.toys||false);}
-  // Review
-  var r=data.review||{};
-  document.getElementById('bfQ1').value=r.q1||'';document.getElementById('bfQ2').value=r.q2||'';
-  document.getElementById('bfQ3').value=r.q3||'';document.getElementById('bfQ4').value=r.q4||'';
-  document.getElementById('bfExtra').value=r.extra||'';
-  // Joys
-  var joys=data.joys||[];
-  document.getElementById('bfJoyList').innerHTML='';
-  var em=['🌟','🌸','💝','🍀','🎵','☕','🐱','🌈','🎁','📚','🌻','🍰'];
-  var items=joys.length>0?joys:[''];
-  items.forEach(function(j,i){var li=document.createElement('li');li.className='joy-item';li.innerHTML='<span class="emoji">'+em[i%em.length]+'</span><textarea id="bfJoy'+i+'" placeholder="记录一件温暖小事...">'+(j||'')+'</textarea>';document.getElementById('bfJoyList').appendChild(li);});
-  // Mood
+  document.getElementById('bfNote').value = data.backfillNote||'';
   ['morning','noon','afternoon','evening'].forEach(function(s){
     var entries = Array.isArray(data[s]) ? data[s] : [];
     if(entries.length===0) entries = [{event:'',moodItems:[],bodySense:'',regulation:''}];
