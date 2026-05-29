@@ -892,21 +892,21 @@ function refreshOverview(){
     <div class="proj-card"><div class="amount" style="color:var(--blue);">${avgSleep}</div><div class="period">⭐ 平均睡眠</div></div>
     <div class="proj-card"><div class="amount" style="color:var(--orange);">${avgEnergy}</div><div class="period">⚡ 平均精力</div></div>
     <div class="proj-card"><div class="amount" style="font-size:0.75rem;color:var(--purple);">${topMoods||'暂无'}</div><div class="period">🔥 常见情绪</div></div>`;
-  // History list - show last 14 days with missing date indicators
+  // History list - show last 14 days, expandable for full detail
   const last14=[];
   for(let i=0;i<14;i++){const d=new Date();d.setDate(d.getDate()-i);last14.push(d.toISOString().slice(0,10));}
-  
-  document.getElementById('overviewList').innerHTML=last14.map(dk=>{
+
+  const sections=['morning','noon','afternoon','evening'];
+  const sectionLabels={morning:'🌅 上午',noon:'☀️ 中午',afternoon:'🌤️ 下午',evening:'🌙 晚上'};
+
+  document.getElementById('overviewList').innerHTML=last14.map((dk,cardIdx)=>{
     const data=all[dk];
     const dateLabel=new Date(dk+'T00:00:00').toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
     const isToday=dk===today;
-    
+
     let hasContent=false;
-    ['morning','noon','afternoon','evening'].forEach(s=>{
-      (Array.isArray(data[s])?data[s]:[]).forEach(e=>{
-        if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;
-      });
-    });
+    sections.forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;});});
+
     if(!data||!hasContent){
       return `<div style="background:var(--card);border:1px dashed var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:6px;cursor:pointer;opacity:0.7;" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
         <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -915,21 +915,72 @@ function refreshOverview(){
         </div>
       </div>`;
     }
-    
+
+    let detailHTML='';
+    sections.forEach(s=>{
+      const entries=Array.isArray(data[s])?data[s]:[];
+      entries.forEach((e,ei)=>{
+        if(!e.event&&!(e.moodItems&&e.moodItems.length)&&!(e.moods&&e.moods.length))return;
+        const moods=(e.moodItems||[]).map(mi=>`${mi.mood}(${mi.intensity||5})`).join(' ');
+        const oldMoods=(e.moods||[]).join(' ');
+        const allMoods=moods||oldMoods;
+        detailHTML+=`<div style="border-left:3px solid var(--border);padding:6px 10px;margin:6px 0;font-size:0.8rem;">
+          <span style="color:var(--text2);font-size:0.7rem;">${sectionLabels[s]} #${ei+1}</span>
+          ${e.event?`<div style="margin:3px 0;">📝 ${e.event}</div>`:''}
+          ${allMoods?`<div style="color:var(--pink);">😊 ${allMoods}</div>`:''}
+          ${e.bodySense?`<div style="color:var(--blue);">🫁 体感: ${e.bodySense}</div>`:''}
+          ${e.regulation?`<div style="color:var(--green);">🛠️ 调节: ${e.regulation}</div>`:''}
+        </div>`;
+      });
+    });
+
+    const r=data.review||{};
+    if(r.q1||r.q2||r.q3||r.q4){
+      detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.78rem;">
+        <div style="font-weight:600;color:var(--pink);margin-bottom:4px;">🔍 复盘</div>
+        ${r.q1?`<div style="margin:3px 0;color:var(--text2);">${r.q1}</div>`:''}
+        ${r.q2?`<div style="margin:3px 0;color:var(--text2);">${r.q2}</div>`:''}
+        ${r.q3?`<div style="margin:3px 0;color:var(--text2);">${r.q3}</div>`:''}
+        ${r.q4?`<div style="margin:3px 0;color:var(--text2);">${r.q4}</div>`:''}
+        ${r.extra?`<div style="margin:3px 0;color:var(--text2);">${r.extra}</div>`:''}
+      </div>`;
+    }
+
+    const joys=(data.joys||[]).filter(j=>j);
+    if(joys.length){
+      detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.78rem;">
+        <div style="font-weight:600;color:var(--yellow);margin-bottom:4px;">✨ 小确幸 (${joys.length})</div>
+        ${joys.map(j=>`<div style="margin:2px 0;color:var(--text2);">🌟 ${j}</div>`).join('')}
+      </div>`;
+    }
+
+    const info=[data.weather,data.sleep?'⭐'+data.sleep:'',data.energy?'⚡'+data.energy:'',data.weight?data.weight+'kg':'',
+      data.breakfast?data.breakfast:'',data.water?'💧'+data.water+'杯':'',data.coffee==='有'?'☕':'',data.alcohol==='有'?'🍺':'',
+      data.exercise?data.exercise+'('+data.exerciseMin+'min)':'',data.bowel?data.bowel:''].filter(Boolean);
+    if(info.length){
+      detailHTML+=`<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.75rem;color:var(--text2);">📌 ${info.join(' · ')}</div>`;
+    }
+
+    detailHTML+=`<button class="btn btn-sm btn-secondary" style="margin-top:10px;width:100%;" onclick="event.stopPropagation();loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">✏️ 编辑当天记录</button>`;
+
     const moods=[];
-    ['morning','noon','afternoon','evening'].forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{(e.moodItems||[]).forEach(mi=>{if(mi.mood)moods.push(mi.mood);});(e.moods||[]).forEach(m=>moods.push(m));});});
+    sections.forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{(e.moodItems||[]).forEach(mi=>{if(mi.mood)moods.push(mi.mood);});(e.moods||[]).forEach(m=>moods.push(m));});});
     const uniqueMoods=[...new Set(moods)];
-    const hasReview=data.review&&(data.review.q1||data.review.q2||data.review.q3||data.review.q4);
-    const hasJoys=data.joys&&data.joys.filter(j=>j).length>0;
-    const basicInfo=[data.weather,data.sleep?'⭐'+data.sleep:'',data.weight?data.weight+'kg':'',data.exercise||''].filter(Boolean).join(' · ');
-    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;cursor:pointer;${isToday?'border-color:var(--pink);':''}" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
-      <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span><span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''}</span></div>
-      ${basicInfo?`<div style="font-size:0.75rem;color:var(--text2);margin-top:4px;">${basicInfo}</div>`:''}
-      <div style="font-size:0.72rem;margin-top:4px;display:flex;gap:8px;">${hasReview?'<span style="color:var(--green);">✅ 已复盘</span>':''}${hasJoys?'<span style="color:var(--yellow);">✨ 小确幸('+data.joys.filter(j=>j).length+')</span>':''}</div></div>`;
-  }).join('');}
+
+    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;${isToday?'border-color:var(--pink);':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="toggleDetail('detail_${cardIdx}')">
+        <span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span>
+        <span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''} ▾</span>
+      </div>
+      <div id="detail_${cardIdx}" style="display:none;margin-top:10px;">${detailHTML}</div>
+    </div>`;
+  }).join('');
 
 // ==================== CLOUD SYNC ====================
-async function cloudSave(){
+async 
+function toggleDetail(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==="none"?"block":"none";}
+
+function cloudSave(){
   const all=loadAll();const dates=Object.keys(all);
   if(dates.length===0){setCloudMsg('没有数据可上传','var(--red)');return;}
   setCloudMsg('上传中...','var(--text2)');
