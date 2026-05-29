@@ -201,6 +201,10 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
 .trend-mid{color:var(--orange);font-weight:600;}
 .trend-low{color:var(--red);font-weight:600;}
 
+.proj-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.proj-card .amount{font-size:1.5rem;font-weight:700;}
+.proj-card .period{font-size:0.75rem;color:var(--text2);margin-top:4px;}
+
 .tip-box{
   background:linear-gradient(135deg,var(--rose-bg),var(--purple-bg));
   border:1px solid var(--pink); border-radius:var(--radius);
@@ -236,6 +240,7 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
   <button data-tab="review">🔍 每日复盘</button>
   <button data-tab="joy">✨ 小确幸</button>
   <button data-tab="trends">📊 本周趋势</button>
+  <button data-tab="overview">🗂️ 数据总览</button>
 </nav>
 
 <!-- ============ TAB 1: 今日记录 ============ -->
@@ -354,6 +359,27 @@ nav.tabs button.active{color:var(--pink);border-bottom-color:var(--pink);}
         <tbody id="trendBody"><tr><td colspan="4" style="text-align:center;color:var(--text2);">暂无本周数据，开始记录后自动生成</td></tr></tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<!-- ============ TAB 5: 数据总览 ============ -->
+<div class="tab-content" id="tab-overview">
+  <div class="card" style="border-left:3px solid var(--green);">
+    <h2>📊 数据总览</h2>
+    <div id="overviewStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;"></div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--blue);">
+    <h2>📅 历史记录</h2>
+    <div id="overviewList" style="max-height:70vh;overflow-y:auto;"></div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--orange);">
+    <h2>☁️ 云端同步</h2>
+    <p style="font-size:0.82rem;color:var(--text2);margin-bottom:12px;">同步数据到 GitHub，换设备也能加载。</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-sm" onclick="cloudSave()">⬆️ 上传云端</button>
+      <button class="btn btn-sm btn-secondary" onclick="cloudLoad()">⬇️ 从云端加载</button>
+    </div>
+    <p id="cloudMsg" style="font-size:0.78rem;color:var(--text2);margin-top:8px;"></p>
   </div>
 </div>
 
@@ -828,9 +854,93 @@ document.getElementById('tabs').addEventListener('click',function(e){
     const tabId=e.target.dataset.tab;
     document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
     document.getElementById('tab-'+tabId).classList.add('active');
-    if(tabId==='trends')refreshTrends();
+    if(tabId==='trends'||tabId==='overview'){ refreshTrends(); refreshOverview(); }
   }
 });
+
+// ==================== DATA OVERVIEW ====================
+function refreshOverview(){
+  const all=loadAll();
+  const dates=Object.keys(all).sort().reverse();
+  const today=new Date().toISOString().slice(0,10);
+  let totalDays=0,totalMoods=0,moodSum=0,sleepSum=0,sleepCount=0,energySum=0,energyCount=0;
+  let allMoodNames={};
+  dates.forEach(dk=>{
+    const data=all[dk];
+    const sections=['morning','noon','afternoon','evening'];
+    let hasContent=false;
+    sections.forEach(s=>{
+      const entries=Array.isArray(data[s])?data[s]:[];
+      entries.forEach(e=>{
+        (e.moodItems||[]).forEach(mi=>{if(mi.mood){allMoodNames[mi.mood]=(allMoodNames[mi.mood]||0)+1;moodSum+=mi.intensity||5;totalMoods++;}});
+        (e.moods||[]).forEach(m=>{allMoodNames[m]=(allMoodNames[m]||0)+1;});
+        if(e.event||(e.moodItems&&e.moodItems.length)||(e.moods&&e.moods.length))hasContent=true;
+      });
+    });
+    if(hasContent)totalDays++;
+    if(data.sleep){sleepSum+=parseInt(data.sleep)||0;sleepCount++;}
+    if(data.energy){energySum+=parseInt(data.energy)||0;energyCount++;}
+  });
+  const avgMood=totalMoods?(moodSum/totalMoods).toFixed(1):'-';
+  const avgSleep=sleepCount?(sleepSum/sleepCount).toFixed(1):'-';
+  const avgEnergy=energyCount?(energySum/energyCount).toFixed(1):'-';
+  const topMoods=Object.entries(allMoodNames).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k}(${v}次)`).join(' ');
+  document.getElementById('overviewStats').innerHTML=`
+    <div class="proj-card"><div class="amount" style="color:var(--green);">${totalDays}</div><div class="period">📅 记录天数</div></div>
+    <div class="proj-card"><div class="amount" style="color:var(--pink);">${avgMood}</div><div class="period">😊 平均情绪</div></div>
+    <div class="proj-card"><div class="amount" style="color:var(--blue);">${avgSleep}</div><div class="period">⭐ 平均睡眠</div></div>
+    <div class="proj-card"><div class="amount" style="color:var(--orange);">${avgEnergy}</div><div class="period">⚡ 平均精力</div></div>
+    <div class="proj-card"><div class="amount" style="font-size:0.75rem;color:var(--purple);">${topMoods||'暂无'}</div><div class="period">🔥 常见情绪</div></div>`;
+  if(dates.length===0){
+    document.getElementById('overviewList').innerHTML='<p style="color:var(--text2);text-align:center;">暂无记录，开始你的第一条情绪记录吧 🐨</p>';
+    return;
+  }
+  document.getElementById('overviewList').innerHTML=dates.map(dk=>{
+    const data=all[dk];
+    const dateLabel=new Date(dk+'T00:00:00').toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
+    const isToday=dk===today;
+    const moods=[];
+    ['morning','noon','afternoon','evening'].forEach(s=>{(Array.isArray(data[s])?data[s]:[]).forEach(e=>{(e.moodItems||[]).forEach(mi=>{if(mi.mood)moods.push(mi.mood);});(e.moods||[]).forEach(m=>moods.push(m));});});
+    const uniqueMoods=[...new Set(moods)];
+    const hasReview=data.review&&(data.review.q1||data.review.q2||data.review.q3||data.review.q4);
+    const hasJoys=data.joys&&data.joys.filter(j=>j).length>0;
+    const basicInfo=[data.weather,data.sleep?'⭐'+data.sleep:'',data.weight?data.weight+'kg':'',data.exercise||''].filter(Boolean).join(' · ');
+    return `<div style="background:var(--card2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px;cursor:pointer;${isToday?'border-color:var(--pink);':''}" onclick="loadDay('${dk}');fillForm();document.getElementById('tabs').querySelector('[data-tab=checkin]').click();window.scrollTo(0,0);">
+      <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-weight:600;">${isToday?'📌 ':''}${dateLabel}</span><span style="font-size:0.75rem;color:var(--text2);">${uniqueMoods.slice(0,4).join(' ')}${uniqueMoods.length>4?' +'+(uniqueMoods.length-4):''}</span></div>
+      ${basicInfo?`<div style="font-size:0.75rem;color:var(--text2);margin-top:4px;">${basicInfo}</div>`:''}
+      <div style="font-size:0.72rem;margin-top:4px;display:flex;gap:8px;">${hasReview?'<span style="color:var(--green);">✅ 已复盘</span>':''}${hasJoys?'<span style="color:var(--yellow);">✨ 小确幸('+data.joys.filter(j=>j).length+')</span>':''}</div></div>`;
+  }).join('');
+}
+
+// ==================== CLOUD SYNC ====================
+async function cloudSave(){
+  const all=loadAll();const dates=Object.keys(all);
+  if(dates.length===0){setCloudMsg('没有数据可上传','var(--red)');return;}
+  setCloudMsg('上传中...','var(--text2)');
+  try{
+    let tokenVal=localStorage.getItem('gh_token');
+    if(!tokenVal){const t=prompt('请输入 GitHub Token（仅保存在本地浏览器）：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(all))));
+    let sha='';
+    try{const check=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});if(check.ok){const j=await check.json();sha=j.sha;}}catch(e){}
+    const body=JSON.stringify({message:'update mood data',content,sha:sha||undefined,branch:'main'});
+    const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{method:'PUT',headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'},body});
+    if(resp.ok){setCloudMsg('✅ 上传成功！('+dates.length+'天记录)','var(--green)');}else{setCloudMsg('❌ 上传失败','var(--red)');}
+  }catch(e){setCloudMsg('❌ 网络错误','var(--red)');}
+}
+async function cloudLoad(){
+  setCloudMsg('下载中...','var(--text2)');
+  try{
+    let tokenVal=localStorage.getItem('gh_token');
+    if(!tokenVal){const t=prompt('请输入 GitHub Token：');if(!t)return;localStorage.setItem('gh_token',t);tokenVal=t;}
+    const resp=await fetch('https://api.github.com/repos/nsjie/tt-daily-mood/contents/data.json',{headers:{Authorization:'token '+tokenVal,Accept:'application/vnd.github+json'}});
+    if(!resp.ok){setCloudMsg('❌ 云端暂无数据','var(--red)');return;}
+    const j=await resp.json();const data=JSON.parse(decodeURIComponent(escape(atob(j.content))));
+    saveAll(data);setCloudMsg('✅ 加载成功！('+Object.keys(data).length+'天记录)','var(--green)');
+    loadDay();fillForm();refreshOverview();
+  }catch(e){setCloudMsg('❌ 加载失败','var(--red)');}
+}
+function setCloudMsg(msg,color){const el=document.getElementById('cloudMsg');if(el){el.textContent=msg;el.style.color=color;}}
 
 // ==================== EXPORT/IMPORT ====================
 function exportData(){
