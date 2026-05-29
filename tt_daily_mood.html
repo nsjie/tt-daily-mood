@@ -923,7 +923,21 @@ document.addEventListener('click',function(e){
     if(row){ e.target.classList.toggle('selected'); }
     const chipRowId=row?row.id:'';
     if(chipRowId&&chipRowId.endsWith('_chips')){
-      refreshIntensityUI(chipRowId.replace('_chips',''));
+      const sid=chipRowId.replace('_chips','');
+      if(sid.startsWith('bf_')){
+        // Backfill chip - refresh intensity group
+        var container=document.getElementById(sid+'_intGroup');
+        if(container){
+          var chips=row.querySelectorAll('.chip.selected');
+          if(chips.length===0){container.innerHTML='';return;}
+          var html='<label style="margin-bottom:6px;">情绪强度 (1-10)</label>';
+          chips.forEach(function(c,j){html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:0.82rem;min-width:85px;">'+c.textContent.trim()+'</span><input type="range" id="'+sid+'_int_'+j+'" min="1" max="10" value="5" data-target="'+sid+'_intv_'+j+'" style="flex:1;accent-color:var(--purple);"><span id="'+sid+'_intv_'+j+'" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">5</span></div>';});
+          container.innerHTML=html;
+          container.querySelectorAll('input[type=range][data-target]').forEach(function(r){r.oninput=function(){var t=document.getElementById(this.getAttribute('data-target'));if(t)t.textContent=this.value;};});
+        }
+      }else{
+        refreshIntensityUI(sid);
+      }
     }
   }
 });
@@ -1187,16 +1201,35 @@ function fillBfMood(section, entries){
   entries.forEach(function(e,i){
     var sid='bf_'+section+i;
     var selected = (e.moodItems||[]).map(function(m){return m.mood;});
-    html += "<div class=\"mood-block "+section+"\" style=\"margin-bottom:12px;\">";
-    html += "<div style=\"display:flex;justify-content:space-between;margin-bottom:6px;\"><span style=\"font-size:0.75rem;color:var(--text2);\">#"+(i+1)+"</span></div>";
-    html += "<div class=\"form-group\"><label>事件简述</label><textarea id=\""+sid+"_event\" placeholder=\"发生了什么？\">"+(e.event||'')+"</textarea></div>";
-    html += "<div class=\"form-group\"><label>情绪（可多选）</label><div class=\"chip-row\" id=\""+sid+"_chips\">";
-    MOODS.forEach(function(c){ html += "<span class=\"chip"+(selected.indexOf(c)>=0?' selected':'')+"\">"+c+"</span>"; });
-    html += "</div></div>";
-    html += "<div class=\"form-group\"><label>情绪强度 (1-10)</label><div class=\"slider-row\"><input type=\"range\" id=\""+sid+"_intensity\" min=\"1\" max=\"10\" value=\""+(e.intensity||5)+"\" oninput=\"document.getElementById('"+sid+"_intVal').textContent=this.value\"><span class=\"val\" id=\""+sid+"_intVal\">"+(e.intensity||5)+"</span></div></div>";
-    html += "</div>";
+    html += '<div class="mood-block '+section+'" style="margin-bottom:12px;">';
+    html += '<div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:0.75rem;color:var(--text2);">#'+(i+1)+'</span></div>';
+    html += '<div class="form-group"><label>事件简述</label><textarea id="'+sid+'_event" placeholder="发生了什么？">'+(e.event||'')+'</textarea></div>';
+    html += '<div class="form-group"><label>情绪（可多选）</label><div class="chip-row" id="'+sid+'_chips" data-bf-sid="'+sid+'">';
+    MOODS.forEach(function(c){ html += '<span class="chip'+(selected.indexOf(c)>=0?' selected':'')+'">'+c+'</span>'; });
+    html += '</div></div>';
+    html += '<div class="form-group bf-intensity-group" id="'+sid+'_intGroup">';
+    if(e.moodItems&&e.moodItems.length){
+      html += '<label style="margin-bottom:6px;">情绪强度 (1-10)</label>';
+      e.moodItems.forEach(function(mi,j){
+        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:0.82rem;min-width:85px;">'+mi.mood+'</span><input type="range" id="'+sid+'_int_'+j+'" min="1" max="10" value="'+(mi.intensity||5)+'" data-target="'+sid+'_intv_'+j+'" style="flex:1;accent-color:var(--purple);"><span id="'+sid+'_intv_'+j+'" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">'+(mi.intensity||5)+'</span></div>';
+      });
+    }else if(e.moods&&e.moods.length){
+      html += '<label style="margin-bottom:6px;">情绪强度 (1-10)</label>';
+      e.moods.forEach(function(m,j){
+        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:0.82rem;min-width:85px;">'+m+'</span><input type="range" id="'+sid+'_int_'+j+'" min="1" max="10" value="5" data-target="'+sid+'_intv_'+j+'" style="flex:1;accent-color:var(--purple);"><span id="'+sid+'_intv_'+j+'" style="font-size:0.85rem;font-weight:700;min-width:20px;text-align:center;color:var(--purple);">5</span></div>';
+      });
+    }
+    html += '</div>';
+    html += '</div>';
   });
   container.innerHTML = html;
+  // Bind all range inputs inside this container
+  container.querySelectorAll('input[type=range][data-target]').forEach(function(r){
+    r.oninput = function(){
+      var target = document.getElementById(this.getAttribute('data-target'));
+      if(target) target.textContent = this.value;
+    };
+  });
 }
 function addBfMoodEntry(section){
   var data = getDayData(backfillDate);
@@ -1266,24 +1299,17 @@ function collectBfMoodEntries(section){
     if(!evEl)break;
     var moodItems=[];
     var chipRow=document.getElementById(sid+'_chips');
-    if(chipRow)chipRow.querySelectorAll('.chip.selected').forEach(function(c){ moodItems.push({mood:c.textContent.trim(),intensity:5}); });
-    var intEl=document.getElementById(sid+'_intensity');
-    var intensity=intEl?parseInt(intEl.value)||5:5;
-    moodItems.forEach(function(m){ m.intensity = intensity; });
+    if(chipRow){
+      var chips=chipRow.querySelectorAll('.chip.selected');
+      chips.forEach(function(c,j){
+        var intEl=document.getElementById(sid+'_int_'+j);
+        moodItems.push({mood:c.textContent.trim(),intensity:intEl?parseInt(intEl.value)||5:5});
+      });
+    }
     entries.push({event:evEl.value, moodItems:moodItems, bodySense:'', regulation:''});
   }
   return entries.length?entries:[{event:'',moodItems:[],bodySense:'',regulation:''}];
 }
-
-function exportData(){
-  const all=loadAll();
-  const blob=new Blob([JSON.stringify(all,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='tt_daily_mood_'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();URL.revokeObjectURL(url);
-}
-
 // ==================== INIT ====================
 loadDay();
 fillForm();
